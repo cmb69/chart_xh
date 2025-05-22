@@ -1,5 +1,7 @@
 <?php
 
+$plugin_tx['chart']['error_load']="Das Diagramm „%s“ kann nicht geladen werden!";
+
 $plugin_tx['chart']['syscheck_title']="System-Prüfung";
 $plugin_tx['chart']['syscheck_phpversion']="PHP Version ≥ %s: %s";
 $plugin_tx['chart']['syscheck_plibversion']="Plib_XH Version ≥ %s: %s";

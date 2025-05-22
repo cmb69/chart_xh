@@ -43,7 +43,7 @@ class ChartCommand
     {
         $chart = Chart::read($name, $this->store);
         if ($chart === null) {
-            return Response::create("no such chart");
+            return Response::create($this->view->message("fail", "error_load", $name));
         }
         return Response::create($this->view->render("chart", [
             "caption" => $chart->caption(),

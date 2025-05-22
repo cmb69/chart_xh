@@ -37,4 +37,10 @@ class ChartCommandTest extends TestCase
         $response = $this->sut()("test");
         Approvals::verifyHtml($response->output());
     }
+
+    public function testReportsUnreadableChart(): void
+    {
+        $response = $this->sut()("wrong");
+        $this->assertStringContainsString("Cannot load the chart “wrong”!", $response->output());
+    }
 }
