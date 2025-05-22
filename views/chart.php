@@ -13,7 +13,7 @@ use Plib\View;
 
 <script type="module" src="<?=$this->esc($chart_js)?>"></script>
 <script type="module" src="<?=$this->esc($script)?>"></script>
-<figure class="chart_chart">
+<figure class="chart_chart" data-chart-config='<?=$this->json($js_conf)?>'>
   <figcaption><?=$this->esc($caption)?></figcaption>
-  <canvas id="chart" width="400" height="400" data-chart-config='<?=$this->json($js_conf)?>'></canvas>
+  <canvas width="400" height="400"></canvas>
 </figure>

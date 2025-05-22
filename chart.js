@@ -17,7 +17,11 @@
  * along with Chart_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-const canvas = document.getElementById("chart");
-const config = JSON.parse(canvas.dataset.chartConfig);
-console.log(config);
-new Chart(canvas.getContext("2d"), config);
+function init(element) {
+    const canvas = element.querySelector("canvas");
+    const config = JSON.parse(element.dataset.chartConfig);
+    console.log(config);
+    new Chart(canvas.getContext("2d"), config);
+}
+
+document.querySelectorAll("figure.chart_chart").forEach(init);
