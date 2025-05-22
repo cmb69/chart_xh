@@ -46,7 +46,7 @@ class InfoCommand
         return Response::create($this->view->render("info", [
             "version" => Dic::VERSION,
             "checks" => [
-                $this->checkPhpVersion("7.4.0"),
+                $this->checkPhpVersion("8.0.0"),
                 $this->checkXHVersion("1.7.0"),
                 $this->checkPlibVersion("1.9"),
                 $this->checkWritability($this->pluginFolder . "config/"),

@@ -28,7 +28,7 @@ use DOMNode;
 class Dataset
 {
     private string $color;
-    /** @var list<?int> */
+    /** @var list<?float> */
     private array $values;
 
     public static function fromXml(DOMElement $elt): self
@@ -41,7 +41,7 @@ class Dataset
             if ($childNode->nodeName === "value") {
                 assert($childNode instanceof DOMElement);
                 $value = $childNode->nodeValue;
-                $value = $value === null || $value === "" ? null : (int) $value;
+                $value = $value === null || $value === "" ? null : (float) $value;
                 $that->values[] = $value;
             }
         }
@@ -58,7 +58,7 @@ class Dataset
         return $this->color;
     }
 
-    /** @return list<?int> */
+    /** @return list<?float> */
     public function values(): array
     {
         return $this->values;
