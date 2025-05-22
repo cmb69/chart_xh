@@ -21,7 +21,7 @@
 
 namespace Chart;
 
-use Plib\DocumentStore2;
+use Plib\DocumentStore2 as DocumentStore;
 use Plib\SystemChecker;
 use Plib\View;
 
@@ -34,7 +34,7 @@ class Dic
         global $pth;
         return new ChartCommand(
             $pth["folder"]["plugins"] . "chart/",
-            new DocumentStore2($pth["folder"]["content"] . "chart/"),
+            self::documentStore(),
             self::view()
         );
     }
@@ -44,9 +44,16 @@ class Dic
         global $pth;
         return new InfoCommand(
             $pth["folder"]["plugins"] . "chart/",
+            self::documentStore(),
             new SystemChecker(),
             self::view()
         );
+    }
+
+    private static function documentStore(): DocumentStore
+    {
+        global $pth;
+        return new DocumentStore($pth["folder"]["content"] . "chart/");
     }
 
     private static function view(): View

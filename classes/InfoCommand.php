@@ -21,6 +21,7 @@
 
 namespace Chart;
 
+use Plib\DocumentStore2 as DocumentStore;
 use Plib\Response;
 use Plib\SystemChecker;
 use Plib\View;
@@ -28,15 +29,18 @@ use Plib\View;
 class InfoCommand
 {
     private string $pluginFolder;
+    private DocumentStore $store;
     private SystemChecker $systemChecker;
     private View $view;
 
     public function __construct(
         string $pluginFolder,
+        DocumentStore $store,
         SystemChecker $systemChecker,
         View $view
     ) {
         $this->pluginFolder = $pluginFolder;
+        $this->store = $store;
         $this->systemChecker = $systemChecker;
         $this->view = $view;
     }
@@ -52,6 +56,7 @@ class InfoCommand
                 $this->checkWritability($this->pluginFolder . "config/"),
                 $this->checkWritability($this->pluginFolder . "css/"),
                 $this->checkWritability($this->pluginFolder . "languages/"),
+                $this->checkWritability($this->store->folder()),
             ]
         ]))->withTitle("Chart " . $this->view->esc(Dic::VERSION));
     }
