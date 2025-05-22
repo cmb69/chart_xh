@@ -69,9 +69,11 @@ final class Chart implements Document2
         return $that;
     }
 
-    public static function create(string $name, DocumentStore2 $store): ?self
+    public static function create(string $name, DocumentStore2 $store): self
     {
-        return $store->create("$name.xml", self::class);
+        $that = $store->create("$name.xml", self::class);
+        assert($that instanceof self);
+        return $that;
     }
 
     public static function read(string $name, DocumentStore2 $store): ?self
@@ -111,6 +113,11 @@ final class Chart implements Document2
     public function datasets(): array
     {
         return $this->datasets;
+    }
+
+    public function setCaption(string $caption): void
+    {
+        $this->caption = $caption;
     }
 
     public function addLabel(string $label): void

@@ -21,6 +21,7 @@
 
 namespace Chart;
 
+use Plib\CsrfProtector;
 use Plib\DocumentStore2 as DocumentStore;
 use Plib\SystemChecker;
 use Plib\View;
@@ -46,6 +47,15 @@ class Dic
             $pth["folder"]["plugins"] . "chart/",
             self::documentStore(),
             new SystemChecker(),
+            self::view()
+        );
+    }
+
+    public static function chartAdminCommand(): ChartAdminCommand
+    {
+        return new ChartAdminCommand(
+            self::documentStore(),
+            new CsrfProtector(),
             self::view()
         );
     }

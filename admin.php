@@ -20,6 +20,7 @@
  */
 
 use Chart\Dic;
+use Plib\Request;
 
 if (!defined("CMSIMPLE_XH_VERSION")) {
     http_response_code(403);
@@ -31,12 +32,15 @@ if (!defined("CMSIMPLE_XH_VERSION")) {
  * @var string $o
  */
 
-XH_registerStandardPluginMenuItems(false);
+XH_registerStandardPluginMenuItems(true);
 if (XH_wantsPluginAdministration("chart")) {
-    $o .= print_plugin_admin("off");
+    $o .= print_plugin_admin("on");
     switch ($admin) {
         case "":
             $o .= Dic::infoCommand()()();
+            break;
+        case "plugin_main":
+            $o .= Dic::chartAdminCommand()(Request::current())();
             break;
         default:
             $o .= plugin_admin_common();

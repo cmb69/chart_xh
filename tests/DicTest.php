@@ -22,4 +22,9 @@ class DicTest extends TestCase
     {
         $this->assertInstanceOf(InfoCommand::class, Dic::infoCommand());
     }
+
+    public function testMakesChartAdminCommand(): void
+    {
+        $this->assertInstanceOf(ChartAdminCommand::class, Dic::chartAdminCommand());
+    }
 }
