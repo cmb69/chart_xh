@@ -46,7 +46,7 @@ class ChartCommand
             return Response::create("no such chart");
         }
         return Response::create($this->view->render("chart", [
-            "chart_js" => $this->pluginFolder . "chart/chartjs.umd.js",
+            "chart_js" => $this->pluginFolder . "chartjs/chart.umd.js",
             "script" => $this->pluginFolder . "chart.js",
             "js_conf" => $this->jsConf($chart),
         ]));
