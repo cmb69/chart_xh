@@ -19,7 +19,9 @@
  * along with Chat_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use Chart\Dic;
+
 function chart(): string
 {
-    return "";
+    return Dic::chartCommand()()();
 }

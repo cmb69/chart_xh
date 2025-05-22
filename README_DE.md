@@ -55,6 +55,14 @@ Das Aussehen von Chart_XH kann unter `Stylesheet` angepasst werden.
 
 ## Verwendung
 
+Um ein Diagramm auf einer Seite anzuzeigen:
+
+    {{{chart}}}
+
+Um ein Diagramm im Template anzuzeigen:
+
+    <?=chart()?>
+
 ## Fehlerbehebung
 
 Melden Sie Programmfehler und stellen Sie Supportanfragen entweder auf

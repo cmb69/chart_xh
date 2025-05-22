@@ -21,6 +21,18 @@
 
 namespace Chart;
 
+use Plib\View;
+
 class Dic
 {
+    public static function chartCommand(): ChartCommand
+    {
+        return new ChartCommand(self::view());
+    }
+
+    private static function view(): View
+    {
+        global $pth, $plugin_tx;
+        return new View($pth["folder"]["plugins"] . "chart/views/", $plugin_tx["chart"]);
+    }
 }

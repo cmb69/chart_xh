@@ -55,6 +55,14 @@ The look of Chart_XH can be customized under `Stylesheet`.
 
 ## Usage
 
+To display a chart on a page:
+
+    {{{chart}}}
+
+To display a chart in the template:
+
+    <?=chart()?>
+
 ## Troubleshooting
 
 Report bugs and ask for support either on
