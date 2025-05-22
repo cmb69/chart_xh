@@ -110,9 +110,9 @@ final class Chart implements Document2
         $this->labels[] = $label;
     }
 
-    public function addDataset(string $color): Dataset
+    public function addDataset(string $label, string $color): Dataset
     {
-        return $this->datasets[] = new Dataset($color);
+        return $this->datasets[] = new Dataset($label, $color);
     }
 
     public function toString(): string

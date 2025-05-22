@@ -58,6 +58,7 @@ class ChartCommand
         $datasets = [];
         foreach ($chart->datasets() as $dataset) {
             $datasets[] = [
+                "label" => $dataset->label(),
                 "backgroundColor" => $dataset->color(),
                 "borderColor" => $dataset->color(),
                 "data" => $dataset->values(),

@@ -27,6 +27,7 @@ use DOMNode;
 
 class Dataset
 {
+    private string $label;
     private string $color;
     /** @var list<?float> */
     private array $values;
@@ -34,6 +35,7 @@ class Dataset
     public static function fromXml(DOMElement $elt): self
     {
         $that = new self(
+            $elt->getAttribute("label"),
             $elt->getAttribute("color")
         );
         foreach ($elt->childNodes as $childNode) {
@@ -48,9 +50,15 @@ class Dataset
         return $that;
     }
 
-    public function __construct(string $color)
+    public function __construct(string $label, string $color)
     {
+        $this->label = $label;
         $this->color = $color;
+    }
+
+    public function label(): string
+    {
+        return $this->label;
     }
 
     public function color(): string
@@ -72,6 +80,7 @@ class Dataset
     public function toXml(DOMDocument $doc): DOMElement
     {
         $elt = $doc->createElement("dataset");
+        $elt->setAttribute("label", $this->label);
         $elt->setAttribute("color", $this->color);
         foreach ($this->values as $value) {
             $child = $doc->createElement("value");

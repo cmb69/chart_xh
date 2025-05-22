@@ -10,7 +10,7 @@ class ChartTest extends TestCase
     public function testDoesRoundTrip(): void
     {
         $chart = new Chart("foo");
-        $dataset = $chart->addDataset("#ff0000");
+        $dataset = $chart->addDataset("bar", "#ff0000");
         $dataset->addData(2, 2);
         $dataset->addData(3, 3);
         $actual = Chart::fromString($chart->toString(), "foo.xml");

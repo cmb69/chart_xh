@@ -19,7 +19,7 @@ class ChartCommandTest extends TestCase
         vfsStream::setup("root");
         $this->store = new DocumentStore2(vfsStream::url("root/"));
         $chart = Chart::create("test", $this->store);
-        $dataset = $chart->addDataset("#ff0000");
+        $dataset = $chart->addDataset("one", "#ff0000");
         $dataset->addData(1, 1);
         $dataset->addData(2, 2);
         $dataset->addData(3, 3);
