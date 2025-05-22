@@ -21,13 +21,26 @@
 
 namespace Chart;
 
+use Plib\SystemChecker;
 use Plib\View;
 
 class Dic
 {
+    public const VERSION = "1.0-dev";
+
     public static function chartCommand(): ChartCommand
     {
         return new ChartCommand(self::view());
+    }
+
+    public static function infoCommand(): InfoCommand
+    {
+        global $pth;
+        return new InfoCommand(
+            $pth["folder"]["plugins"] . "chart/",
+            new SystemChecker(),
+            self::view()
+        );
     }
 
     private static function view(): View
