@@ -21,7 +21,7 @@
 
 use Chart\Dic;
 
-function chart(): string
+function chart(string $name): string
 {
-    return Dic::chartCommand()()();
+    return Dic::chartCommand()($name)();
 }

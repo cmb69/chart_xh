@@ -21,20 +21,52 @@
 
 namespace Chart;
 
+use Chart\Model\Chart;
+use Plib\DocumentStore2;
 use Plib\Response;
 use Plib\View;
 
 class ChartCommand
 {
+    private DocumentStore2 $store;
     private View $view;
 
-    public function __construct(View $view)
+    public function __construct(DocumentStore2 $store, View $view)
     {
+        $this->store = $store;
         $this->view = $view;
     }
 
-    public function __invoke(): Response
+    public function __invoke(string $name): Response
     {
-        return Response::create($this->view->render("chart", []));
+        $chart = Chart::read($name, $this->store);
+        if ($chart === null) {
+            return Response::create("no such chart");
+        }
+        return Response::create($this->view->render("chart", [
+            "js_conf" => $this->jsConf($chart),
+        ]));
+    }
+
+    /** @return mixed */
+    private function jsConf(Chart $chart)
+    {
+        $dataset = [];
+        foreach ($chart->data() as $data) {
+            $dataset[] = (object) [
+                "x" => (string) $data->x(),
+                "y" => $data->y(),
+            ];
+        }
+        return (object) [
+            "type" => "line",
+            "data" => (object) [
+                "datasets" => [
+                    (object) [
+                    "data" => $dataset,
+                    ],
+                ],
+            ],
+        ];
     }
 }

@@ -17,31 +17,6 @@
  * along with Chart_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-new Chart(document.getElementById("chart").getContext("2d"), {
-    "type": "bar",
-    "data": {
-        "datasets": [{
-            "data": [{"x": "Red", "y": 12},
-                {"x": "Blue", "y": 19},
-                {"x": "Yellow", "y": 3},
-                {"x": "Green", "y": 5},
-                {"x": "Purple", "y": 2},
-                {"x": "Orange", "y": 3}],
-            "backgroundColor": [
-                "#ff0000",
-                "rgba(54, 162, 235, 0.2)",
-                "rgba(255, 206, 86, 0.2)",
-                "rgba(75, 192, 192, 0.2)",
-                "rgba(153, 102, 255, 0.2)",
-                "rgba(255, 159, 64, 0.2)"
-            ]
-        }]
-    },
-    "options": {
-      "plugins": {
-        "legend": {
-          "display": false
-        }
-      }
-    }
-});
+const canvas = document.getElementById("chart");
+const config = JSON.parse(canvas.dataset.chartConfig);
+new Chart(canvas.getContext("2d"), config);

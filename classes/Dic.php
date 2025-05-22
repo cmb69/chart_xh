@@ -21,6 +21,7 @@
 
 namespace Chart;
 
+use Plib\DocumentStore2;
 use Plib\SystemChecker;
 use Plib\View;
 
@@ -30,7 +31,11 @@ class Dic
 
     public static function chartCommand(): ChartCommand
     {
-        return new ChartCommand(self::view());
+        global $pth;
+        return new ChartCommand(
+            new DocumentStore2($pth["folder"]["content"] . "chart/"),
+            self::view()
+        );
     }
 
     public static function infoCommand(): InfoCommand

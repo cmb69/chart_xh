@@ -63,17 +63,17 @@ final class Chart implements Document2
         return $that;
     }
 
-    public function create(string $name, DocumentStore2 $store): ?self
+    public static function create(string $name, DocumentStore2 $store): ?self
     {
         return $store->create("$name.xml", self::class);
     }
 
-    public function read(string $name, DocumentStore2 $store): ?self
+    public static function read(string $name, DocumentStore2 $store): ?self
     {
         return $store->read("$name.xml", self::class);
     }
 
-    public function update(string $name, DocumentStore2 $store): ?self
+    public static function update(string $name, DocumentStore2 $store): ?self
     {
         return $store->update("$name.xml", self::class);
     }
