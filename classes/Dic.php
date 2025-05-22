@@ -33,6 +33,7 @@ class Dic
     {
         global $pth;
         return new ChartCommand(
+            $pth["folder"]["plugins"] . "chart/",
             new DocumentStore2($pth["folder"]["content"] . "chart/"),
             self::view()
         );

@@ -29,7 +29,7 @@ class ChartCommandTest extends TestCase
 
     private function sut(): ChartCommand
     {
-        return new ChartCommand($this->store, $this->view);
+        return new ChartCommand("./", $this->store, $this->view);
     }
 
     public function testRendersChart(): void

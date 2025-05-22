@@ -28,11 +28,13 @@ use Plib\View;
 
 class ChartCommand
 {
+    private string $pluginFolder;
     private DocumentStore2 $store;
     private View $view;
 
-    public function __construct(DocumentStore2 $store, View $view)
+    public function __construct(string $pluginFolder, DocumentStore2 $store, View $view)
     {
+        $this->pluginFolder = $pluginFolder;
         $this->store = $store;
         $this->view = $view;
     }
@@ -44,6 +46,8 @@ class ChartCommand
             return Response::create("no such chart");
         }
         return Response::create($this->view->render("chart", [
+            "chart_js" => $this->pluginFolder . "chart/chartjs.umd.js",
+            "script" => $this->pluginFolder . "chart.js",
             "js_conf" => $this->jsConf($chart),
         ]));
     }
