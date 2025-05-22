@@ -53,7 +53,11 @@ class ChartCommand
     {
         $datasets = [];
         foreach ($chart->datasets() as $dataset) {
-            $datasets[] = ["data" => $dataset->values()];
+            $datasets[] = [
+                "backgroundColor" => $dataset->color(),
+                "borderColor" => $dataset->color(),
+                "data" => $dataset->values(),
+            ];
         }
         return (object) [
             "type" => "line",
