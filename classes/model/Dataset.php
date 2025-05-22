@@ -28,8 +28,8 @@ use DOMNode;
 class Dataset
 {
     private string $color;
-    /** @var list<Data> */
-    private array $data;
+    /** @var list<?int> */
+    private array $values;
 
     public static function fromXml(DOMElement $elt): self
     {
@@ -38,9 +38,11 @@ class Dataset
         );
         foreach ($elt->childNodes as $childNode) {
             assert($childNode instanceof DOMNode);
-            if ($childNode->nodeName === "data") {
+            if ($childNode->nodeName === "value") {
                 assert($childNode instanceof DOMElement);
-                $that->data[] = Data::fromXml($childNode);
+                $value = $childNode->nodeValue;
+                $value = $value === null || $value === "" ? null : (int) $value;
+                $that->values[] = $value;
             }
         }
         return $that;
@@ -56,23 +58,25 @@ class Dataset
         return $this->color;
     }
 
-    /** @return list<Data> */
-    public function data(): array
+    /** @return list<?int> */
+    public function values(): array
     {
-        return $this->data;
+        return $this->values;
     }
 
-    public function addData(string $x, int $y): Data
+    public function addData(?int $value): void
     {
-        return $this->data[] = new Data($x, $y);
+        $this->values[] = $value;
     }
 
     public function toXml(DOMDocument $doc): DOMElement
     {
         $elt = $doc->createElement("dataset");
         $elt->setAttribute("color", $this->color);
-        foreach ($this->data as $data) {
-            $elt->appendChild($data->toXml($doc));
+        foreach ($this->values as $value) {
+            $child = $doc->createElement("value");
+            $child->nodeValue = (string) $value;
+            $elt->appendChild($child);
         }
         return $elt;
     }

@@ -53,19 +53,16 @@ class ChartCommand
     {
         $datasets = [];
         foreach ($chart->datasets() as $dataset) {
-            $datas = [];
-            foreach ($dataset->data() as $data) {
-                $datas[] = (object) [
-                    "x" => (string) $data->x(),
-                    "y" => $data->y(),
-                ];
-            }
-            $datasets[] = ["data" => $datas];
+            $datasets[] = ["data" => $dataset->values()];
         }
         return (object) [
             "type" => "line",
             "data" => (object) [
+                "labels" => $chart->labels(),
                 "datasets" => $datasets,
+            ],
+            "options" => (object) [
+                "spanGaps" => true,
             ],
         ];
     }

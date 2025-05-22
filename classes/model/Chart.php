@@ -30,6 +30,8 @@ use Plib\DocumentStore2;
 final class Chart implements Document2
 {
     private string $name;
+    /** @var list<string> */
+    private array $labels = [];
     /** @var list<Dataset> */
     private array $datasets = [];
 
@@ -55,7 +57,10 @@ final class Chart implements Document2
         $chart = $doc->documentElement;
         foreach ($chart->childNodes as $childNode) {
             assert($childNode instanceof DOMNode);
-            if ($childNode->nodeName === "dataset") {
+            if ($childNode->nodeName === "label") {
+                assert($childNode instanceof DOMElement);
+                $that->labels[] = (string) $childNode->nodeValue;
+            } elseif ($childNode->nodeName === "dataset") {
                 assert($childNode instanceof DOMElement);
                 $that->datasets[] = Dataset::fromXml($childNode);
             }
@@ -88,10 +93,21 @@ final class Chart implements Document2
         return $this->name;
     }
 
+    /** @return list<string> */
+    public function labels(): array
+    {
+        return $this->labels;
+    }
+
     /** @return list<Dataset> */
     public function datasets(): array
     {
         return $this->datasets;
+    }
+
+    public function addLabel(string $label): void
+    {
+        $this->labels[] = $label;
     }
 
     public function addDataset(string $color): Dataset
@@ -104,6 +120,11 @@ final class Chart implements Document2
         $doc = new DOMDocument('1.0', 'UTF-8');
         $chart = $doc->createElement('chart');
         $doc->appendChild($chart);
+        foreach ($this->labels as $label) {
+            $elt = $doc->createElement("label");
+            $elt->nodeValue = $label;
+            $chart->appendChild($elt);
+        }
         foreach ($this->datasets as $dataset) {
             $chart->appendChild($dataset->toXml($doc));
         }

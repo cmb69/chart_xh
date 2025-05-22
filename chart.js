@@ -19,4 +19,5 @@
 
 const canvas = document.getElementById("chart");
 const config = JSON.parse(canvas.dataset.chartConfig);
+console.log(config);
 new Chart(canvas.getContext("2d"), config);
