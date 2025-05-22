@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <element name="chart" xmlns="http://relaxng.org/ns/structure/1.0">
+  <attribute name="caption"/>
   <zeroOrMore>
     <element name="label">
       <text/>

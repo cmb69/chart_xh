@@ -30,6 +30,7 @@ use Plib\DocumentStore2;
 final class Chart implements Document2
 {
     private string $name;
+    private string $caption;
     /** @var list<string> */
     private array $labels = [];
     /** @var list<Dataset> */
@@ -37,7 +38,7 @@ final class Chart implements Document2
 
     public static function new(string $key): self
     {
-        return new self(basename($key, ".xml"));
+        return new self(basename($key, ".xml"), "");
     }
 
     public static function fromString(string $contents, string $key): ?self
@@ -53,8 +54,8 @@ final class Chart implements Document2
             return null;
         }
         assert($doc->documentElement instanceof DOMElement);
-        $that = new self(basename($key, ".xml"));
         $chart = $doc->documentElement;
+        $that = new self(basename($key, ".xml"), $chart->getAttribute("caption"));
         foreach ($chart->childNodes as $childNode) {
             assert($childNode instanceof DOMNode);
             if ($childNode->nodeName === "label") {
@@ -83,14 +84,21 @@ final class Chart implements Document2
         return $store->update("$name.xml", self::class);
     }
 
-    public function __construct(string $name)
+    public function __construct(string $name, string $caption)
     {
         $this->name = $name;
+        $this->caption = $caption;
     }
 
     public function name(): string
     {
         return $this->name;
+    }
+
+    public function caption(): string
+    {
+
+        return $this->caption;
     }
 
     /** @return list<string> */
@@ -119,6 +127,7 @@ final class Chart implements Document2
     {
         $doc = new DOMDocument('1.0', 'UTF-8');
         $chart = $doc->createElement('chart');
+        $chart->setAttribute("caption", $this->caption);
         $doc->appendChild($chart);
         foreach ($this->labels as $label) {
             $elt = $doc->createElement("label");

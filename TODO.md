@@ -1,5 +1,2 @@
-
-<strong>EEEKey:</strong> {EEEKey}<br>
-<strong>Leistung:</strong> {Leistung} kW<br>
-<strong>Latitude:</strong> {lat}<br>
-<strong>Longitude:</strong> {lon}
+* width and height of widget are hard-coded
+* support multiple charts on same page

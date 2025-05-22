@@ -9,7 +9,7 @@ class ChartTest extends TestCase
 {
     public function testDoesRoundTrip(): void
     {
-        $chart = new Chart("foo");
+        $chart = new Chart("foo", "Chart");
         $dataset = $chart->addDataset("bar", "#ff0000");
         $dataset->addData(2, 2);
         $dataset->addData(3, 3);

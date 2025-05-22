@@ -1,3 +1,10 @@
+/* charts */
+
+figure.chart_chart {}
+figure.chart_chart figcaption {
+    font-size: larger;
+}
+
 /* plugin info */
 
 article.chart_plugininfo {}
