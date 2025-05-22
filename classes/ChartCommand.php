@@ -51,21 +51,21 @@ class ChartCommand
     /** @return mixed */
     private function jsConf(Chart $chart)
     {
-        $dataset = [];
-        foreach ($chart->data() as $data) {
-            $dataset[] = (object) [
-                "x" => (string) $data->x(),
-                "y" => $data->y(),
-            ];
+        $datasets = [];
+        foreach ($chart->datasets() as $dataset) {
+            $datas = [];
+            foreach ($dataset->data() as $data) {
+                $datas[] = (object) [
+                    "x" => (string) $data->x(),
+                    "y" => $data->y(),
+                ];
+            }
+            $datasets[] = ["data" => $datas];
         }
         return (object) [
             "type" => "line",
             "data" => (object) [
-                "datasets" => [
-                    (object) [
-                    "data" => $dataset,
-                    ],
-                ],
+                "datasets" => $datasets,
             ],
         ];
     }

@@ -26,27 +26,24 @@ use DOMElement;
 
 class Data
 {
-    private int $x;
+    private string $x;
     private int $y;
-    private string $color;
 
     public static function fromXml(DOMElement $elt): self
     {
         return new self(
-            (int) $elt->getAttribute("x"),
-            (int) $elt->getAttribute("y"),
-            $elt->getAttribute("color")
+            $elt->getAttribute("x"),
+            (int) $elt->getAttribute("y")
         );
     }
 
-    public function __construct(int $x, int $y, string $color)
+    public function __construct(string $x, int $y)
     {
         $this->x = $x;
         $this->y = $y;
-        $this->color = $color;
     }
 
-    public function x(): int
+    public function x(): string
     {
         return $this->x;
     }
@@ -56,17 +53,11 @@ class Data
         return $this->y;
     }
 
-    public function color(): string
-    {
-        return $this->color;
-    }
-
     public function toXml(DOMDocument $doc): DOMElement
     {
         $elt = $doc->createElement("data");
-        $elt->setAttribute("x", (string) $this->x);
+        $elt->setAttribute("x", $this->x);
         $elt->setAttribute("y", (string) $this->y);
-        $elt->setAttribute("color", $this->color);
         return $elt;
     }
 }

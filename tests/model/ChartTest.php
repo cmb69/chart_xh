@@ -10,9 +10,9 @@ class ChartTest extends TestCase
     public function testDoesRoundTrip(): void
     {
         $chart = new Chart("foo");
-        $chart->addData(1, 1, "#ff0000");
-        $chart->addData(2, 2, "#00ff00");
-        $chart->addData(3, 3, "#0000ff");
+        $dataset = $chart->addDataset("#ff0000");
+        $dataset->addData(2, 2);
+        $dataset->addData(3, 3);
         $actual = Chart::fromString($chart->toString(), "foo.xml");
         $this->assertEquals($chart, $actual);
     }

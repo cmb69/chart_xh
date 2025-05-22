@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <element name="chart" xmlns="http://relaxng.org/ns/structure/1.0">
   <zeroOrMore>
-    <element name="data">
-      <attribute name="x"/>
-      <attribute name="y"/>
+    <element name="dataset">
       <attribute name="color"/>
+      <zeroOrMore>
+        <element name="data">
+          <attribute name="x"/>
+          <attribute name="y"/>
+        </element>
+      </zeroOrMore>
     </element>
   </zeroOrMore>
 </element>

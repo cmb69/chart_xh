@@ -30,8 +30,8 @@ use Plib\DocumentStore2;
 final class Chart implements Document2
 {
     private string $name;
-    /** @var list<Data> */
-    private array $data = [];
+    /** @var list<Dataset> */
+    private array $datasets = [];
 
     public static function new(string $key): self
     {
@@ -55,9 +55,9 @@ final class Chart implements Document2
         $chart = $doc->documentElement;
         foreach ($chart->childNodes as $childNode) {
             assert($childNode instanceof DOMNode);
-            if ($childNode->nodeName === "data") {
+            if ($childNode->nodeName === "dataset") {
                 assert($childNode instanceof DOMElement);
-                $that->data[] = Data::fromXml($childNode);
+                $that->datasets[] = Dataset::fromXml($childNode);
             }
         }
         return $that;
@@ -88,15 +88,15 @@ final class Chart implements Document2
         return $this->name;
     }
 
-    /** @return list<Data> */
-    public function data(): array
+    /** @return list<Dataset> */
+    public function datasets(): array
     {
-        return $this->data;
+        return $this->datasets;
     }
 
-    public function addData(int $x, int $y, string $color): Data
+    public function addDataset(string $color): Dataset
     {
-        return $this->data[] = new Data($x, $y, $color);
+        return $this->datasets[] = new Dataset($color);
     }
 
     public function toString(): string
@@ -104,8 +104,8 @@ final class Chart implements Document2
         $doc = new DOMDocument('1.0', 'UTF-8');
         $chart = $doc->createElement('chart');
         $doc->appendChild($chart);
-        foreach ($this->data as $data) {
-            $chart->appendChild($data->toXml($doc));
+        foreach ($this->datasets as $dataset) {
+            $chart->appendChild($dataset->toXml($doc));
         }
         if (!$doc->relaxNGValidate(__DIR__ . "/../../chart.rng")) {
             return "";
