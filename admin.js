@@ -54,6 +54,11 @@ form.querySelectorAll(".chart_delete_dataset").forEach(button => {
     button.onclick = deleteDataset;
 });
 form.onsubmit = () => {
+    form.querySelectorAll(".chart_apply_values").forEach(button => {
+        if (button.style.display !== "none") {
+            button.click();
+        }
+    });
     let datasets = [];
     for (let i = 1; i < table.rows.length - 1; i++) {
         const row = table.rows[i];
