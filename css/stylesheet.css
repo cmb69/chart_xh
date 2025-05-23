@@ -46,6 +46,27 @@ article.chart_edit .chart_labels textarea {
 article.chart_edit .chart_datasets textarea {
     height: 10em;
 }
+article.chart_edit table {
+    grid-column: 1/3;
+    width: 100%;
+    table-layout: fixed;
+}
+article.chart_edit caption {
+    font-size: larger;
+}
+article.chart_edit col:nth-child(1) {
+    width: 8em;
+}
+article.chart_edit col:nth-child(2) {
+    width: 4em;
+}
+article.chart_edit col:nth-child(4) {
+    width: 5em;
+}
+article.chart_edit th:nth-child(4),
+article.chart_edit td:nth-child(4) {
+    text-align: right;
+}
 article.chart_edit .chart_controls {
     grid-column: 1/3;
     margin: 1em 0;

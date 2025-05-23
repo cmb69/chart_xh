@@ -36,7 +36,7 @@ class ChartAdminCommandTest extends TestCase
 
     private function sut(): ChartAdminCommand
     {
-        return new ChartAdminCommand(/* "./", */ $this->store, $this->csrfProtector, $this->view);
+        return new ChartAdminCommand("./", $this->store, $this->csrfProtector, $this->view);
     }
 
     public function testRendersOverview(): void

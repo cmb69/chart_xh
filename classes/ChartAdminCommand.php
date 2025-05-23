@@ -30,18 +30,18 @@ use Plib\View;
 
 class ChartAdminCommand
 {
-    // private string $pluginFolder;
+    private string $pluginFolder;
     private DocumentStore $store;
     private CsrfProtector $csrfProtector;
     private View $view;
 
     public function __construct(
-        // string $pluginFolder,
+        string $pluginFolder,
         DocumentStore $store,
         CsrfProtector $csrfProtector,
         View $view
     ) {
-        // $this->pluginFolder = $pluginFolder;
+        $this->pluginFolder = $pluginFolder;
         $this->store = $store;
         $this->csrfProtector = $csrfProtector;
         $this->view = $view;
@@ -108,7 +108,7 @@ class ChartAdminCommand
             $errors = [$this->view->message("fail", "error_load", $request->get("chart_name"))];
             return $this->respondWithOverview($request, $errors);
         }
-        return $this->respondWithEditor($request, false, $this->chartToDto($chart), []);
+        return $this->respondWithEditor($request, false, $this->chartToDto($chart), $this->datasetDtos($chart));
     }
 
     private function update(Request $request): Response
@@ -164,23 +164,23 @@ class ChartAdminCommand
 
     /**
      * @param object{name:string,caption:string} $dto
-     * @param iterable<object{latitude:float,longitude:float,info:string,show:string}> $markers
+     * @param iterable<object{label:string,color:string,values:string}> $datasets
      * @param list<string> $errors
      */
     private function respondWithEditor(
         Request $request,
         bool $new,
         $dto,
-        iterable $markers,
+        iterable $datasets,
         array $errors = []
     ): Response {
         return Response::create($this->view->render("edit", [
             "errors" => $errors,
             "name_disabled" => $new ? "" : "disabled",
             "chart" => $dto,
-            "markers" => $markers,
+            "datasets" => $datasets,
             "token" => $this->csrfProtector->token(),
-            // "script" => $request->url()->path($this->script())->with("v", Dic::VERSION)->relative(),
+            "script" => $request->url()->path($this->script())->with("v", Dic::VERSION)->relative(),
         ]))->withTitle("Chart – " . $this->view->text("label_edit"));
     }
 
@@ -201,6 +201,18 @@ class ChartAdminCommand
             "labels" => implode(";", $chart->labels()),
             "datasets" => (string) json_encode($datasets),
         ];
+    }
+
+    /** @return iterable<object{label:string,color:string,values:string}> */
+    private function datasetDtos(Chart $chart): iterable
+    {
+        foreach ($chart->datasets() as $dataset) {
+            yield (object) [
+                "label" => $dataset->label(),
+                "color" => $dataset->color(),
+                "values" => implode(";", $dataset->values()),
+            ];
+        }
     }
 
     /** @return object{name:string,caption:string,labels:string,datasets:string} */
@@ -228,19 +240,25 @@ class ChartAdminCommand
             foreach ($datasets as $ds) {
                 if (
                     array_key_exists("label", $ds)
+                    && is_string($ds["label"])
                     && array_key_exists("color", $ds)
+                    && is_string($ds["color"])
                     && array_key_exists("values", $ds)
+                    && is_array($ds["values"])
                 ) {
                     $dataset = $chart->addDataset($ds["label"], $ds["color"]);
-                    if (is_array($ds["values"])) {
-                        foreach ($ds["values"] as $value) {
-                            if (is_float($value) || is_int($value) || is_null($value)) {
-                                $dataset->addValue($value);
-                            }
+                    foreach ($ds["values"] as $value) {
+                        if (is_float($value) || is_int($value) || is_null($value)) {
+                            $dataset->addValue($value);
                         }
                     }
                 }
             }
         }
+    }
+
+    private function script(): string
+    {
+        return $this->pluginFolder . "admin.js";
     }
 }

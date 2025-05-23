@@ -2,13 +2,19 @@
 
 $plugin_tx['chart']['menu_main']="Verwaltung";
 
+$plugin_tx['chart']['label_add_dataset']="Datensatz hinzufügen";
 $plugin_tx['chart']['label_caption']="Überschrift";
+$plugin_tx['chart']['label_color']="Farbe";
 $plugin_tx['chart']['label_datasets']="Datensätze";
+$plugin_tx['chart']['label_delete_dataset']="Datensatz löschen";
 $plugin_tx['chart']['label_edit']="Bearbeiten";
+$plugin_tx['chart']['label_label']="Beschriftung";
 $plugin_tx['chart']['label_labels']="Beschriftungen";
+$plugin_tx['chart']['label_move_dataset']="Datensatz verschieben";
 $plugin_tx['chart']['label_name']="Name";
 $plugin_tx['chart']['label_new']="Neu";
 $plugin_tx['chart']['label_save']="Speichern";
+$plugin_tx['chart']['label_values']="Werte";
 
 $plugin_tx['chart']['help_labels']="(Zeichenfolgenliste, durch Semikolon getrennt)";
 $plugin_tx['chart']['help_name']="(nur a-z, 0-9 und Bindestriche)";

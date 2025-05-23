@@ -53,7 +53,9 @@ class Dic
 
     public static function chartAdminCommand(): ChartAdminCommand
     {
+        global $pth;
         return new ChartAdminCommand(
+            $pth["folder"]["plugins"] . "chart/",
             self::documentStore(),
             new CsrfProtector(),
             self::view()
