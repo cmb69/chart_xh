@@ -120,6 +120,11 @@ final class Chart implements Document2
         $this->caption = $caption;
     }
 
+    public function purgeLabels(): void
+    {
+        $this->labels = [];
+    }
+
     public function addLabel(string $label): void
     {
         $this->labels[] = $label;

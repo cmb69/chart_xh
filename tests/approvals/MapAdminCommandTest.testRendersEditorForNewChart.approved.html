@@ -7,13 +7,20 @@
       <label>
         <span>Name</span>
         <span class="chart_help">(only a-z, 0-9, and hyhpens)</span>
-        <input name="name" value="hello"  required pattern="[a-z0-9\-]+">
+        <input name="name" value=""  required pattern="[a-z0-9\-]+">
       </label>
     </p>
     <p>
       <label>
         <span>Caption</span>
-        <textarea name="caption">world</textarea>
+        <textarea name="caption"></textarea>
+      </label>
+    </p>
+    <p class="chart_labels">
+      <label>
+        <span>Labels</span>
+        <span class="chart_help">(list of semicolon separated strings)</span>
+        <textarea name="labels"></textarea>
       </label>
     </p>
     <p class="chart_controls">

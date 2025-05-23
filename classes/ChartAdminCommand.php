@@ -69,20 +69,27 @@ class ChartAdminCommand
         if ($request->post("chart_do") !== null) {
             return $this->create($request);
         }
-        return $this->respondWithEditor($request, true, new Chart("hello", "world"), []);
+        $dto = (object) [
+            "name" => "",
+            "caption" => "",
+            "labels" => "",
+        ];
+        return $this->respondWithEditor($request, true, $dto, []);
     }
 
     private function create(Request $request): Response
     {
         $chart = Chart::create($request->post("name") ?? "", $this->store);
+        $dto = $this->requestToDto($request);
         if (!$this->csrfProtector->check($request->post("chart_token"))) {
             $this->store->rollback();
             $errors = [$this->view->message("fail", "error_not_authorized")];
-            return $this->respondWithEditor($request, true, $chart, [], $errors);
+            return $this->respondWithEditor($request, true, $dto, [], $errors);
         }
+        $this->updateChartFromDto($chart, $dto);
         if (!$this->store->commit()) {
             $errors = [$this->view->message("fail", "error_save", $chart->name())];
-            return $this->respondWithEditor($request, true, $chart, [], $errors);
+            return $this->respondWithEditor($request, true, $dto, [], $errors);
         }
         return Response::redirect($request->url()->without("action")->absolute());
     }
@@ -100,7 +107,7 @@ class ChartAdminCommand
             $errors = [$this->view->message("fail", "error_load", $request->get("chart_name"))];
             return $this->respondWithOverview($request, $errors);
         }
-        return $this->respondWithEditor($request, false, $chart, []);
+        return $this->respondWithEditor($request, false, $this->chartToDto($chart), []);
     }
 
     private function update(Request $request): Response
@@ -113,15 +120,16 @@ class ChartAdminCommand
             $errors = [$this->view->message("fail", "error_load", $request->get("chart_name"))];
             return $this->respondWithOverview($request, $errors);
         }
+        $dto = $this->requestToDto($request);
         if (!$this->csrfProtector->check($request->post("chart_token"))) {
             $this->store->rollback();
             $errors = [$this->view->message("fail", "error_not_authorized")];
-            return $this->respondWithEditor($request, true, $chart, [], $errors);
+            return $this->respondWithEditor($request, true, $dto, [], $errors);
         }
-        $chart->setCaption($request->post("caption") ?? "");
+        $this->updateChartFromDto($chart, $dto);
         if (!$this->store->commit()) {
             $errors = [$this->view->message("fail", "error_save", $chart->name())];
-            return $this->respondWithEditor($request, false, $chart, [], $errors);
+            return $this->respondWithEditor($request, false, $dto, [], $errors);
         }
         return Response::redirect($request->url()->without("action")->absolute());
     }
@@ -154,23 +162,54 @@ class ChartAdminCommand
     }
 
     /**
+     * @param object{name:string,caption:string} $dto
      * @param iterable<object{latitude:float,longitude:float,info:string,show:string}> $markers
      * @param list<string> $errors
      */
     private function respondWithEditor(
         Request $request,
         bool $new,
-        Chart $chart,
+        $dto,
         iterable $markers,
         array $errors = []
     ): Response {
         return Response::create($this->view->render("edit", [
             "errors" => $errors,
             "name_disabled" => $new ? "" : "disabled",
-            "chart" => $chart,
+            "chart" => $dto,
             "markers" => $markers,
             "token" => $this->csrfProtector->token(),
             // "script" => $request->url()->path($this->script())->with("v", Dic::VERSION)->relative(),
         ]))->withTitle("Chart – " . $this->view->text("label_edit"));
+    }
+
+    /** @return object{name:string,caption:string,labels:string} */
+    private function chartToDto(Chart $chart)
+    {
+        return (object) [
+            "name" => $chart->name(),
+            "caption" => $chart->caption(),
+            "labels" => implode(";", $chart->labels()),
+        ];
+    }
+
+    /** @return object{name:string,caption:string,labels:string} */
+    private function requestToDto(Request $request)
+    {
+        return (object) [
+            "name" => $request->post("name") ?? $request->get("maps_map") ?? "",
+            "caption" => $request->post("caption") ?? "",
+            "labels" => $request->post("labels") ?? "",
+        ];
+    }
+
+    /** @param object{name:string,caption:string,labels:string} $dto */
+    private function updateChartFromDto(Chart $chart, $dto): void
+    {
+        $chart->setCaption($dto->caption);
+        $chart->purgeLabels();
+        foreach (array_map("trim", explode(";", $dto->labels)) as $label) {
+            $chart->addLabel($label);
+        }
     }
 }

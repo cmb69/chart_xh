@@ -4,10 +4,12 @@ $plugin_tx['chart']['menu_main']="Administration";
 
 $plugin_tx['chart']['label_caption']="Caption";
 $plugin_tx['chart']['label_edit']="Edit";
+$plugin_tx['chart']['label_labels']="Labels";
 $plugin_tx['chart']['label_name']="Name";
 $plugin_tx['chart']['label_new']="New";
 $plugin_tx['chart']['label_save']="Save";
 
+$plugin_tx['chart']['help_labels']="(list of semicolon separated strings)";
 $plugin_tx['chart']['help_name']="(only a-z, 0-9, and hyhpens)";
 
 $plugin_tx['chart']['error_not_authorized']="You are not authorized to conduct this action!";

@@ -8,7 +8,7 @@ if (!defined("CMSIMPLE_XH_VERSION")) {http_response_code(403); exit;}
 /**
  * @var View $this
  * @var list<string> $errors
- * @var Chart $chart
+ * @var object{name:string,caption:string,labels:string} $chart
  * @var string $name_disabled
  * @var string $token
  * @var string $script
@@ -26,13 +26,20 @@ if (!defined("CMSIMPLE_XH_VERSION")) {http_response_code(403); exit;}
       <label>
         <span><?=$this->text("label_name")?></span>
         <span class="chart_help"><?=$this->text("help_name")?></span>
-        <input name="name" value="<?=$this->esc($chart->name())?>" <?=$this->esc($name_disabled)?> required pattern="[a-z0-9\-]+">
+        <input name="name" value="<?=$this->esc($chart->name)?>" <?=$this->esc($name_disabled)?> required pattern="[a-z0-9\-]+">
       </label>
     </p>
     <p>
       <label>
         <span><?=$this->text("label_caption")?></span>
-        <textarea name="caption"><?=$this->esc($chart->caption())?></textarea>
+        <textarea name="caption"><?=$this->esc($chart->caption)?></textarea>
+      </label>
+    </p>
+    <p class="chart_labels">
+      <label>
+        <span><?=$this->text("label_labels")?></span>
+        <span class="chart_help"><?=$this->text("help_labels")?></span>
+        <textarea name="labels"><?=$this->esc($chart->labels)?></textarea>
       </label>
     </p>
     <p class="chart_controls">
