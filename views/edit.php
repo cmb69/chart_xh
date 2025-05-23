@@ -8,7 +8,7 @@ if (!defined("CMSIMPLE_XH_VERSION")) {http_response_code(403); exit;}
 /**
  * @var View $this
  * @var list<string> $errors
- * @var object{name:string,caption:string,labels:string} $chart
+ * @var object{name:string,caption:string,labels:string,datasets:string} $chart
  * @var string $name_disabled
  * @var string $token
  * @var string $script
@@ -40,6 +40,12 @@ if (!defined("CMSIMPLE_XH_VERSION")) {http_response_code(403); exit;}
         <span><?=$this->text("label_labels")?></span>
         <span class="chart_help"><?=$this->text("help_labels")?></span>
         <textarea name="labels"><?=$this->esc($chart->labels)?></textarea>
+      </label>
+    </p>
+    <p class="chart_datasets">
+      <label>
+        <span><?=$this->text("label_datasets")?></span>
+        <textarea name="datasets"><?=$this->esc($chart->datasets)?></textarea>
       </label>
     </p>
     <p class="chart_controls">

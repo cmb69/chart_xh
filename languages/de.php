@@ -3,6 +3,7 @@
 $plugin_tx['chart']['menu_main']="Verwaltung";
 
 $plugin_tx['chart']['label_caption']="Überschrift";
+$plugin_tx['chart']['label_datasets']="Datensätze";
 $plugin_tx['chart']['label_edit']="Bearbeiten";
 $plugin_tx['chart']['label_labels']="Beschriftungen";
 $plugin_tx['chart']['label_name']="Name";

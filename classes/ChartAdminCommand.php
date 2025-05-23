@@ -73,6 +73,7 @@ class ChartAdminCommand
             "name" => "",
             "caption" => "",
             "labels" => "",
+            "datasets" => "[]",
         ];
         return $this->respondWithEditor($request, true, $dto, []);
     }
@@ -183,33 +184,63 @@ class ChartAdminCommand
         ]))->withTitle("Chart – " . $this->view->text("label_edit"));
     }
 
-    /** @return object{name:string,caption:string,labels:string} */
+    /** @return object{name:string,caption:string,labels:string,datasets:string} */
     private function chartToDto(Chart $chart)
     {
+        $datasets = [];
+        foreach ($chart->datasets() as $dataset) {
+            $datasets[] = [
+                "label" => $dataset->label(),
+                "color" => $dataset->color(),
+                "values" => $dataset->values(),
+            ];
+        }
         return (object) [
             "name" => $chart->name(),
             "caption" => $chart->caption(),
             "labels" => implode(";", $chart->labels()),
+            "datasets" => (string) json_encode($datasets),
         ];
     }
 
-    /** @return object{name:string,caption:string,labels:string} */
+    /** @return object{name:string,caption:string,labels:string,datasets:string} */
     private function requestToDto(Request $request)
     {
         return (object) [
             "name" => $request->post("name") ?? $request->get("maps_map") ?? "",
             "caption" => $request->post("caption") ?? "",
             "labels" => $request->post("labels") ?? "",
+            "datasets" => $request->post("datasets") ?? "",
         ];
     }
 
-    /** @param object{name:string,caption:string,labels:string} $dto */
+    /** @param object{name:string,caption:string,labels:string,datasets:string} $dto */
     private function updateChartFromDto(Chart $chart, $dto): void
     {
         $chart->setCaption($dto->caption);
         $chart->purgeLabels();
         foreach (array_map("trim", explode(";", $dto->labels)) as $label) {
             $chart->addLabel($label);
+        }
+        $datasets = json_decode($dto->datasets, true);
+        if (is_array($datasets)) {
+            $chart->purgeDatasets();
+            foreach ($datasets as $ds) {
+                if (
+                    array_key_exists("label", $ds)
+                    && array_key_exists("color", $ds)
+                    && array_key_exists("values", $ds)
+                ) {
+                    $dataset = $chart->addDataset($ds["label"], $ds["color"]);
+                    if (is_array($ds["values"])) {
+                        foreach ($ds["values"] as $value) {
+                            if (is_float($value) || is_int($value) || is_null($value)) {
+                                $dataset->addValue($value);
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

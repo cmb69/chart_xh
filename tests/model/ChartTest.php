@@ -11,8 +11,8 @@ class ChartTest extends TestCase
     {
         $chart = new Chart("foo", "Chart");
         $dataset = $chart->addDataset("bar", "#ff0000");
-        $dataset->addData(2, 2);
-        $dataset->addData(3, 3);
+        $dataset->addValue(2);
+        $dataset->addValue(3);
         $actual = Chart::fromString($chart->toString(), "foo.xml");
         $this->assertEquals($chart, $actual);
     }

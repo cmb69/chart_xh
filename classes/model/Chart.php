@@ -130,6 +130,11 @@ final class Chart implements Document2
         $this->labels[] = $label;
     }
 
+    public function purgeDatasets(): void
+    {
+        $this->datasets = [];
+    }
+
     public function addDataset(string $label, string $color): Dataset
     {
         return $this->datasets[] = new Dataset($label, $color);

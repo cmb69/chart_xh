@@ -20,9 +20,9 @@ class ChartCommandTest extends TestCase
         $this->store = new DocumentStore2(vfsStream::url("root/"));
         $chart = Chart::create("test", $this->store);
         $dataset = $chart->addDataset("one", "#ff0000");
-        $dataset->addData(1, 1);
-        $dataset->addData(2, 2);
-        $dataset->addData(3, 3);
+        $dataset->addValue(1);
+        $dataset->addValue(2);
+        $dataset->addValue(3);
         $this->store->commit();
         $this->view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["chart"]);
     }

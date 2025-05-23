@@ -30,7 +30,7 @@ class Dataset
     private string $label;
     private string $color;
     /** @var list<?float> */
-    private array $values;
+    private array $values = [];
 
     public static function fromXml(DOMElement $elt): self
     {
@@ -72,7 +72,7 @@ class Dataset
         return $this->values;
     }
 
-    public function addData(?int $value): void
+    public function addValue(?float $value): void
     {
         $this->values[] = $value;
     }
