@@ -24,7 +24,10 @@ class ChartAdminCommandTest extends TestCase
         vfsStream::setup("root");
         $this->store = new DocumentStore(vfsStream::url("root/"));
         $chart = Chart::create("test", $this->store);
-        // $map->addMarker(0, 0, "basic info", true);
+        $dataset = $chart->addDataset("one", "#ff0000");
+        $dataset->addValue(1);
+        $dataset->addValue(2);
+        $dataset->addValue(3);
         $this->store->commit();
         $this->csrfProtector = $this->createStub(CsrfProtector::class);
         $this->csrfProtector->method("token")->willReturn("0123456789ABCDEF");
@@ -132,11 +135,19 @@ class ChartAdminCommandTest extends TestCase
             "post" => [
                 "chart_do" => "",
                 "caption" => "new chart caption",
+                "labels" => "one;two;three",
+                "datasets" => '[{"label":"one","color":"#ff0000","values":[1,2,3]}]'
             ],
         ]);
         $response = $this->sut()($request);
         $chart = Chart::read("test", $this->store);
         $this->assertSame("new chart caption", $chart->caption());
+        $this->assertEquals(["one", "two", "three"], $chart->labels());
+        $this->assertCount(1, $chart->datasets());
+        $dataset = $chart->datasets()[0];
+        $this->assertEquals("one", $dataset->label());
+        $this->assertEquals("#ff0000", $dataset->color());
+        $this->assertCount(3, $dataset->values());
         $this->assertSame("http://example.com/?&chart&admin=plugin_main&chart_name=test", $response->location());
     }
 
