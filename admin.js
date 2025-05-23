@@ -79,6 +79,7 @@ function editValues(event) {
     values.forEach(value => {
         const element = document.createElement("input");
         element.type = "number";
+        element.step = "any";
         element.value = value;
         cell.appendChild(element);
     });
