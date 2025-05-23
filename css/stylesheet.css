@@ -72,6 +72,7 @@ article.chart_edit th .chart_help {
 }
 article.chart_edit td:nth-child(3) {
     display: flex;
+    align-items: flex-start;
     text-align: right;
 }
 article.chart_edit th:nth-child(4),

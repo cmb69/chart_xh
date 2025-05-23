@@ -57,7 +57,7 @@ form.onsubmit = () => {
     let datasets = [];
     for (let i = 1; i < table.rows.length - 1; i++) {
         const row = table.rows[i];
-        const values = row.cells[2].querySelector("input").value.split(";").map(value => {
+        const values = row.cells[2].querySelector("textarea").value.split(";").map(value => {
             const num = parseFloat(value);
             return num.NaN ? null : num;
         });
@@ -74,15 +74,15 @@ form.onsubmit = () => {
 function editValues(event) {
     const button = event.currentTarget;
     const cell = button.parentElement;
-    const input = cell.firstElementChild;
-    const values = input.value.split(";");
+    const textarea = cell.firstElementChild;
+    const values = textarea.value.split(";");
     values.forEach(value => {
         const element = document.createElement("input");
         element.type = "number";
         element.value = value;
         cell.appendChild(element);
     });
-    input.style.display = "none";
+    textarea.style.display = "none";
     cell.style.display = "table-cell";
     button.style.display = "none";
     button.nextElementSibling.style.display = "";
@@ -91,14 +91,14 @@ function editValues(event) {
 function applyValues(event) {
     const button = event.currentTarget;
     const cell = button.parentElement;
-    const input = cell.firstElementChild;
+    const textarea = cell.firstElementChild;
     let values = [];
     event.currentTarget.parentElement.querySelectorAll("input[type=number]").forEach(input => {
         values.push(input.value);
         input.parentElement.removeChild(input);
     });
-    input.value = values.join(";");
-    input.style.display = "";
+    textarea.value = values.join(";");
+    textarea.style.display = "";
     cell.style.display = "";
     button.style.display = "none";
     button.previousElementSibling.style.display = "";
