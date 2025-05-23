@@ -62,7 +62,7 @@ form.onsubmit = () => {
     let datasets = [];
     for (let i = 1; i < table.rows.length - 1; i++) {
         const row = table.rows[i];
-        const values = row.cells[2].querySelector("textarea").value.split(";").map(value => {
+        const values = row.cells[2].querySelector("textarea").value.split(",").map(value => {
             const num = parseFloat(value);
             return num.NaN ? null : num;
         });
@@ -80,7 +80,7 @@ function editValues(event) {
     const button = event.currentTarget;
     const cell = button.parentElement;
     const textarea = cell.firstElementChild;
-    const values = textarea.value.split(";");
+    const values = textarea.value.split(",");
     values.forEach(value => {
         const element = document.createElement("input");
         element.type = "number";
@@ -103,7 +103,7 @@ function applyValues(event) {
         values.push(input.value);
         input.parentElement.removeChild(input);
     });
-    textarea.value = values.join(";");
+    textarea.value = values.join(",");
     textarea.style.display = "";
     cell.style.display = "";
     button.style.display = "none";

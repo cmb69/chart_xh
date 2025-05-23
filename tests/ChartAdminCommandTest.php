@@ -135,7 +135,7 @@ class ChartAdminCommandTest extends TestCase
             "post" => [
                 "chart_do" => "",
                 "caption" => "new chart caption",
-                "labels" => "one;two;three",
+                "labels" => "one,two,three",
                 "datasets" => '[{"label":"one","color":"#ff0000","values":[1,2,3]}]'
             ],
         ]);

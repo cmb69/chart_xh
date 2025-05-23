@@ -18,9 +18,9 @@ $plugin_tx['chart']['label_new']="New";
 $plugin_tx['chart']['label_save']="Save";
 $plugin_tx['chart']['label_values']="Values";
 
-$plugin_tx['chart']['help_labels']="(list of semicolon separated strings)";
+$plugin_tx['chart']['help_labels']="(comma separated strings)";
 $plugin_tx['chart']['help_name']="(only a-z, 0-9, and hyhpens)";
-$plugin_tx['chart']['help_values']="(semicolon separated numbers; decimal separator is dot)";
+$plugin_tx['chart']['help_values']="(comma separated numbers; decimal separator is dot)";
 
 $plugin_tx['chart']['error_not_authorized']="You are not authorized to conduct this action!";
 $plugin_tx['chart']['error_no_chart']="You did not select a chart!";

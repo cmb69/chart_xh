@@ -18,9 +18,9 @@ $plugin_tx['chart']['label_new']="Neu";
 $plugin_tx['chart']['label_save']="Speichern";
 $plugin_tx['chart']['label_values']="Werte";
 
-$plugin_tx['chart']['help_labels']="(Zeichenfolgenliste, durch Semikolon getrennt)";
+$plugin_tx['chart']['help_labels']="(durch Komma getrennte Zeichenfolgen)";
 $plugin_tx['chart']['help_name']="(nur a-z, 0-9 und Bindestriche)";
-$plugin_tx['chart']['help_values']="(durch Semikolon getrennte Zahlen; Dezimaltrenner ist Punkt)";
+$plugin_tx['chart']['help_values']="(durch Komma getrennte Zahlen; Dezimaltrenner ist Punkt)";
 
 $plugin_tx['chart']['error_not_authorized']="Sie sind nicht befugt diese Aktion auszuführen!";
 $plugin_tx['chart']['error_no_chart']="Sie haben keine Chart ausgewählt!";

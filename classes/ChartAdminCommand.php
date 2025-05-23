@@ -198,7 +198,7 @@ class ChartAdminCommand
         return (object) [
             "name" => $chart->name(),
             "caption" => $chart->caption(),
-            "labels" => implode(";", $chart->labels()),
+            "labels" => implode(",", $chart->labels()),
             "datasets" => (string) json_encode($datasets),
         ];
     }
@@ -210,7 +210,7 @@ class ChartAdminCommand
             yield (object) [
                 "label" => $dataset->label(),
                 "color" => $dataset->color(),
-                "values" => implode(";", $dataset->values()),
+                "values" => implode(",", $dataset->values()),
             ];
         }
     }
@@ -231,7 +231,7 @@ class ChartAdminCommand
     {
         $chart->setCaption($dto->caption);
         $chart->purgeLabels();
-        foreach (array_map("trim", explode(";", $dto->labels)) as $label) {
+        foreach (array_map("trim", explode(",", $dto->labels)) as $label) {
             $chart->addLabel($label);
         }
         $datasets = json_decode($dto->datasets, true);
