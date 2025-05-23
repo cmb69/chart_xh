@@ -12,7 +12,7 @@ use Plib\DocumentStore2 as DocumentStore;
 use Plib\FakeRequest;
 use Plib\View;
 
-class MapAdminCommandTest extends TestCase
+class ChartAdminCommandTest extends TestCase
 {
     private DocumentStore $store;
     /** @var CsrfProtector&Stub */
