@@ -31,5 +31,3 @@ $plugin_tx['chart']['syscheck_xhversion']="CMSimple_XH Version ≥ %s: %s";
 $plugin_tx['chart']['syscheck_writable']="%s ist schreibbar: %s";
 $plugin_tx['chart']['syscheck_good']="gut";
 $plugin_tx['chart']['syscheck_bad']="schlecht";
-
-?>
