@@ -63,9 +63,24 @@ article.chart_edit col:nth-child(2) {
 article.chart_edit col:nth-child(4) {
     width: 5em;
 }
+article.chart_edit th,
+article.chart_edit td {
+    vertical-align: top;
+}
+article.chart_edit th .chart_help {
+    display: block;
+}
+article.chart_edit td:nth-child(3) {
+    display: flex;
+    text-align: right;
+}
 article.chart_edit th:nth-child(4),
 article.chart_edit td:nth-child(4) {
     text-align: right;
+}
+article.chart_edit .chart_edit_dataset {
+    display: inline;
+    width: auto;
 }
 article.chart_edit .chart_controls {
     grid-column: 1/3;
