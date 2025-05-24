@@ -34,6 +34,7 @@ final class Chart implements Document2
     private string $name;
     private string $caption;
     private string $type;
+    private bool $transposed;
     /** @var list<string> */
     private array $labels = [];
     /** @var list<Dataset> */
@@ -41,7 +42,7 @@ final class Chart implements Document2
 
     public static function new(string $key): self
     {
-        return new self(basename($key, ".xml"), "", "line");
+        return new self(basename($key, ".xml"), "", "line", false);
     }
 
     public static function fromString(string $contents, string $key): ?self
@@ -58,7 +59,12 @@ final class Chart implements Document2
         }
         assert($doc->documentElement instanceof DOMElement);
         $chart = $doc->documentElement;
-        $that = new self(basename($key, ".xml"), $chart->getAttribute("caption"), $chart->getAttribute("type"));
+        $that = new self(
+            basename($key, ".xml"),
+            $chart->getAttribute("caption"),
+            $chart->getAttribute("type"),
+            (bool) $chart->getAttribute("transposed")
+        );
         foreach ($chart->childNodes as $childNode) {
             assert($childNode instanceof DOMNode);
             if ($childNode->nodeName === "label") {
@@ -89,11 +95,12 @@ final class Chart implements Document2
         return $store->update("$name.xml", self::class);
     }
 
-    public function __construct(string $name, string $caption, string $type)
+    public function __construct(string $name, string $caption, string $type, bool $transposed)
     {
         $this->name = $name;
         $this->caption = $caption;
         $this->type = $type;
+        $this->transposed = $transposed;
     }
 
     public function name(): string
@@ -109,6 +116,11 @@ final class Chart implements Document2
     public function type(): string
     {
         return $this->type;
+    }
+
+    public function transposed(): bool
+    {
+        return $this->transposed;
     }
 
     /** @return list<string> */
@@ -131,6 +143,11 @@ final class Chart implements Document2
     public function setType(string $type): void
     {
         $this->type = $type;
+    }
+
+    public function setTransposed(bool $transposed): void
+    {
+        $this->transposed = $transposed;
     }
 
     public function purgeLabels(): void
@@ -159,6 +176,7 @@ final class Chart implements Document2
         $chart = $doc->createElement('chart');
         $chart->setAttribute("caption", $this->caption);
         $chart->setAttribute("type", $this->type);
+        $chart->setAttribute("transposed", (string) $this->transposed);
         $doc->appendChild($chart);
         foreach ($this->labels as $label) {
             $elt = $doc->createElement("label");

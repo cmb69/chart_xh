@@ -8,6 +8,7 @@
       <value>pie</value>
     </choice>
   </attribute>
+  <attribute name="transposed"/>
   <zeroOrMore>
     <element name="label">
       <text/>

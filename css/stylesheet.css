@@ -37,6 +37,10 @@ article.chart_edit textarea {
     display: block;
     width: 100%;
 }
+article.chart_edit input[type=checkbox] {
+    display: inline;
+    width: auto;
+}
 article.chart_edit .chart_labels,
 article.chart_edit .chart_datasets {
     grid-column: 1/3;

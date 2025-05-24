@@ -16,6 +16,7 @@ $plugin_tx['chart']['label_move_dataset']="Move Dataset";
 $plugin_tx['chart']['label_name']="Name";
 $plugin_tx['chart']['label_new']="New";
 $plugin_tx['chart']['label_save']="Save";
+$plugin_tx['chart']['label_transposed']="transposed";
 $plugin_tx['chart']['label_type']="Type";
 $plugin_tx['chart']['label_type_bar']="Bar";
 $plugin_tx['chart']['label_type_line']="Line";

@@ -61,20 +61,26 @@ class ChartCommand
     /** @return mixed */
     private function jsConf(Chart $chart)
     {
-        if ($chart->type() === "pie") {
+        if ($chart->transposed()) {
             $labels = [];
-            $colors = [];
-            $data = [];
-            foreach ($chart->datasets() as $dataset) {
-                $labels[] = $dataset->label();
-                $colors[] = $dataset->color();
-                $data[] = array_sum($dataset->values());
+            $datasets = [];
+            foreach ($chart->labels() as $i => $label) {
+                $colors = [];
+                $data = [];
+                foreach ($chart->datasets() as $j => $dataset) {
+                    $colors[] = $dataset->color();
+                    $data[] = $dataset->values()[$i];
+                    if ($i === 0) {
+                        $labels[] = $dataset->label();
+                    }
+                }
+                $datasets[] = [
+                    "backgroundColor" => $colors,
+                    "borderColor" => $colors,
+                    "data" => $data,
+                    "label" => $label,
+                ];
             }
-            $datasets = [[
-                "backgroundColor" => $colors,
-                "borderColor" => $colors,
-                "data" => $data,
-            ]];
         } else {
             $labels = $chart->labels();
             $datasets = [];
@@ -87,15 +93,22 @@ class ChartCommand
                 ];
             }
         }
+        $options = [
+            "spanGaps" => true,
+        ];
+        if ($chart->transposed()) {
+            $options["plugins"]["legend"]["labels"] = [
+                "boxWidth" => 0,
+                "boxHeight" => 0,
+            ];
+        }
         return [
             "type" => $chart->type(),
             "data" => [
                 "labels" => $labels,
                 "datasets" => $datasets,
             ],
-            "options" => [
-                "spanGaps" => true,
-            ],
+            "options" => $options,
         ];
     }
 }

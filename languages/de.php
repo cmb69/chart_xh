@@ -16,6 +16,7 @@ $plugin_tx['chart']['label_move_dataset']="Datensatz verschieben";
 $plugin_tx['chart']['label_name']="Name";
 $plugin_tx['chart']['label_new']="Neu";
 $plugin_tx['chart']['label_save']="Speichern";
+$plugin_tx['chart']['label_transposed']="transponiert";
 $plugin_tx['chart']['label_type']="Typ";
 $plugin_tx['chart']['label_type_bar']="Säule";
 $plugin_tx['chart']['label_type_line']="Linie";
