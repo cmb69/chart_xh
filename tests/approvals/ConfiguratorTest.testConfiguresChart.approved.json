@@ -1,0 +1,85 @@
+{
+    "data": {
+        "datasets": [
+            {
+                "backgroundColor": "#ff0000",
+                "borderColor": "#ff0000",
+                "data": [
+                    20.5,
+                    25.7,
+                    16.4
+                ],
+                "label": "SPD"
+            },
+            {
+                "backgroundColor": "#000000",
+                "borderColor": "#000000",
+                "data": [
+                    33,
+                    24.2,
+                    28.6
+                ],
+                "label": "CDU\/CSU"
+            },
+            {
+                "backgroundColor": "#00ff00",
+                "borderColor": "#00ff00",
+                "data": [
+                    8.9,
+                    14.7,
+                    11.6
+                ],
+                "label": "Gr\u00fcne"
+            },
+            {
+                "backgroundColor": "#ffff00",
+                "borderColor": "#ffff00",
+                "data": [
+                    10.7,
+                    11.4,
+                    4.3
+                ],
+                "label": "FDP"
+            },
+            {
+                "backgroundColor": "#0000ff",
+                "borderColor": "#0000ff",
+                "data": [
+                    12.6,
+                    10.4,
+                    20.8
+                ],
+                "label": "AfD"
+            },
+            {
+                "backgroundColor": "#ff00ff",
+                "borderColor": "#ff00ff",
+                "data": [
+                    9.2,
+                    4.9,
+                    8.8
+                ],
+                "label": "Die Linke"
+            },
+            {
+                "backgroundColor": "#7f7f7f",
+                "borderColor": "#7f7f7f",
+                "data": [
+                    5,
+                    8.7,
+                    9.6
+                ],
+                "label": "Sonstige"
+            }
+        ],
+        "labels": [
+            "2017",
+            "2021",
+            "2025"
+        ]
+    },
+    "options": {
+        "spanGaps": true
+    },
+    "type": "bar"
+}

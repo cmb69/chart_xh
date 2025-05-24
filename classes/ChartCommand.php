@@ -31,12 +31,14 @@ class ChartCommand
 {
     private string $pluginFolder;
     private DocumentStore2 $store;
+    private Configurator $configurator;
     private View $view;
 
-    public function __construct(string $pluginFolder, DocumentStore2 $store, View $view)
+    public function __construct(string $pluginFolder, DocumentStore2 $store, Configurator $configurator, View $view)
     {
         $this->pluginFolder = $pluginFolder;
         $this->store = $store;
+        $this->configurator = $configurator;
         $this->view = $view;
     }
 
@@ -54,61 +56,7 @@ class ChartCommand
             "caption" => $advanced ? "" : $chart->caption(),
             "chart_js" => $this->pluginFolder . "chartjs/chart.umd.js",
             "script" => $this->pluginFolder . "chart.js",
-            "js_conf" => $advanced ? $chart->jsConf() : $this->jsConf($chart),
+            "js_conf" => $advanced ? $chart->jsConf() : $this->configurator->configure($chart),
         ]));
-    }
-
-    /** @return mixed */
-    private function jsConf(Chart $chart)
-    {
-        if ($chart->transposed()) {
-            $labels = [];
-            $datasets = [];
-            foreach ($chart->labels() as $i => $label) {
-                $colors = [];
-                $data = [];
-                foreach ($chart->datasets() as $j => $dataset) {
-                    $colors[] = $dataset->color();
-                    $data[] = $dataset->values()[$i];
-                    if ($i === 0) {
-                        $labels[] = $dataset->label();
-                    }
-                }
-                $datasets[] = [
-                    "backgroundColor" => $colors,
-                    "borderColor" => $colors,
-                    "data" => $data,
-                    "label" => $label,
-                ];
-            }
-        } else {
-            $labels = $chart->labels();
-            $datasets = [];
-            foreach ($chart->datasets() as $dataset) {
-                $datasets[] = [
-                    "label" => $dataset->label(),
-                    "backgroundColor" => $dataset->color(),
-                    "borderColor" => $dataset->color(),
-                    "data" => $dataset->values(),
-                ];
-            }
-        }
-        $options = [
-            "spanGaps" => true,
-        ];
-        if ($chart->transposed()) {
-            $options["plugins"]["legend"]["labels"] = [
-                "boxWidth" => 0,
-                "boxHeight" => 0,
-            ];
-        }
-        return [
-            "type" => $chart->type(),
-            "data" => [
-                "labels" => $labels,
-                "datasets" => $datasets,
-            ],
-            "options" => $options,
-        ];
     }
 }

@@ -12,6 +12,7 @@ use Plib\View;
 class ChartCommandTest extends TestCase
 {
     private DocumentStore2 $store;
+    private Configurator $configurator;
     private View $view;
 
     public function setUp(): void
@@ -24,12 +25,13 @@ class ChartCommandTest extends TestCase
         $dataset->addValue(2);
         $dataset->addValue(3);
         $this->store->commit();
+        $this->configurator = new Configurator();
         $this->view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["chart"]);
     }
 
     private function sut(): ChartCommand
     {
-        return new ChartCommand("./", $this->store, $this->view);
+        return new ChartCommand("./", $this->store, $this->configurator, $this->view);
     }
 
     public function testRendersChart(): void

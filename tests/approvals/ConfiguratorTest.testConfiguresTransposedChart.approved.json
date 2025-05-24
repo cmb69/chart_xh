@@ -1,0 +1,117 @@
+{
+    "data": {
+        "datasets": [
+            {
+                "backgroundColor": [
+                    "#ff0000",
+                    "#000000",
+                    "#00ff00",
+                    "#ffff00",
+                    "#0000ff",
+                    "#ff00ff",
+                    "#7f7f7f"
+                ],
+                "borderColor": [
+                    "#ff0000",
+                    "#000000",
+                    "#00ff00",
+                    "#ffff00",
+                    "#0000ff",
+                    "#ff00ff",
+                    "#7f7f7f"
+                ],
+                "data": [
+                    20.5,
+                    33,
+                    8.9,
+                    10.7,
+                    12.6,
+                    9.2,
+                    5
+                ],
+                "label": "2017"
+            },
+            {
+                "backgroundColor": [
+                    "#ff0000",
+                    "#000000",
+                    "#00ff00",
+                    "#ffff00",
+                    "#0000ff",
+                    "#ff00ff",
+                    "#7f7f7f"
+                ],
+                "borderColor": [
+                    "#ff0000",
+                    "#000000",
+                    "#00ff00",
+                    "#ffff00",
+                    "#0000ff",
+                    "#ff00ff",
+                    "#7f7f7f"
+                ],
+                "data": [
+                    25.7,
+                    24.2,
+                    14.7,
+                    11.4,
+                    10.4,
+                    4.9,
+                    8.7
+                ],
+                "label": "2021"
+            },
+            {
+                "backgroundColor": [
+                    "#ff0000",
+                    "#000000",
+                    "#00ff00",
+                    "#ffff00",
+                    "#0000ff",
+                    "#ff00ff",
+                    "#7f7f7f"
+                ],
+                "borderColor": [
+                    "#ff0000",
+                    "#000000",
+                    "#00ff00",
+                    "#ffff00",
+                    "#0000ff",
+                    "#ff00ff",
+                    "#7f7f7f"
+                ],
+                "data": [
+                    16.4,
+                    28.6,
+                    11.6,
+                    4.3,
+                    20.8,
+                    8.8,
+                    9.6
+                ],
+                "label": "2025"
+            }
+        ],
+        "labels": [
+            "SPD",
+            "CDU\/CSU",
+            "Gr\u00fcne",
+            "FDP",
+            "AfD",
+            "Die Linke",
+            "Sonstige"
+        ]
+    },
+    "options": {
+        "plugins": {
+            "legend": {
+                "labels": {
+                    "boxHeight": 0,
+                    "boxWidth": 0
+                }
+            }
+        },
+        "spanGaps": true
+    },
+    "type": "bar"
+}

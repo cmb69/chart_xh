@@ -36,6 +36,7 @@ class Dic
         return new ChartCommand(
             $pth["folder"]["plugins"] . "chart/",
             self::documentStore(),
+            new Configurator(),
             self::view()
         );
     }
