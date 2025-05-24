@@ -31,6 +31,7 @@ $plugin_tx['chart']['error_load']="Das Diagramm „%s“ kann nicht geladen werd
 $plugin_tx['chart']['error_save']="Das Diagramm „%s“ kann nicht gespeichert werden!";
 
 $plugin_tx['chart']['syscheck_title']="System-Prüfung";
+$plugin_tx['chart']['syscheck_extension']="PHP Erweiterung %s verfügbar: %s";
 $plugin_tx['chart']['syscheck_phpversion']="PHP Version ≥ %s: %s";
 $plugin_tx['chart']['syscheck_plibversion']="Plib_XH Version ≥ %s: %s";
 $plugin_tx['chart']['syscheck_xhversion']="CMSimple_XH Version ≥ %s: %s";

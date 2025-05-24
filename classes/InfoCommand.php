@@ -51,6 +51,7 @@ class InfoCommand
             "version" => Dic::VERSION,
             "checks" => [
                 $this->checkPhpVersion("8.0.0"),
+                $this->checkExtension("DOM"),
                 $this->checkXHVersion("1.7.0"),
                 $this->checkPlibVersion("1.10"),
                 $this->checkWritability($this->pluginFolder . "config/"),
@@ -66,6 +67,13 @@ class InfoCommand
         $okay = $this->systemChecker->checkVersion(PHP_VERSION, $version);
         $severity = $okay ? "success" : "fail";
         return $this->view->message($severity, "syscheck_phpversion", $version, $this->state($okay));
+    }
+
+    private function checkExtension(string $extension): string
+    {
+        $okay = $this->systemChecker->checkExtension($extension);
+        $severity = $okay ? "success" : "fail";
+        return $this->view->message($severity, "syscheck_extension", $extension, $this->state($okay));
     }
 
     private function checkXHVersion(string $version): string
