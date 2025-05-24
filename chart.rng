@@ -7,6 +7,7 @@
       <value>bar</value>
       <value>pie</value>
       <value>doughnut</value>
+      <value>polarArea</value>
     </choice>
   </attribute>
   <attribute name="transposed"/>

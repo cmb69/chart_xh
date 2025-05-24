@@ -22,6 +22,7 @@ $plugin_tx['chart']['label_type_bar']="Säule";
 $plugin_tx['chart']['label_type_doughnut']="Ring";
 $plugin_tx['chart']['label_type_line']="Linie";
 $plugin_tx['chart']['label_type_pie']="Kreis";
+$plugin_tx['chart']['label_type_polarArea']="Polar-Area";
 $plugin_tx['chart']['label_values']="Werte";
 
 $plugin_tx['chart']['help_labels']="(durch Komma getrennte Zeichenfolgen)";

@@ -29,7 +29,7 @@ use Plib\DocumentStore2;
 
 final class Chart implements Document2
 {
-    public const TYPES = ["line", "bar", "pie", "doughnut"];
+    public const TYPES = ["line", "bar", "pie", "doughnut", "polarArea"];
 
     private string $name;
     private string $caption;

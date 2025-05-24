@@ -22,6 +22,7 @@ $plugin_tx['chart']['label_type_bar']="Bar";
 $plugin_tx['chart']['label_type_doughnut']="Doughnut";
 $plugin_tx['chart']['label_type_line']="Line";
 $plugin_tx['chart']['label_type_pie']="Pie";
+$plugin_tx['chart']['label_type_polarArea']="Polar Area";
 $plugin_tx['chart']['label_values']="Values";
 
 $plugin_tx['chart']['help_labels']="(comma separated strings)";
