@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chart caption="Voting" type="bar" transposed="">
+  <label>2017</label>
+  <label>2021</label>
+  <label>2025</label>
+  <dataset label="SPD" color="#ff0000">
+    <value>20.5</value>
+    <value>25.7</value>
+    <value>16.4</value>
+  </dataset>
+  <dataset label="CDU/CSU" color="#000000">
+    <value>33.0</value>
+    <value>24.2</value>
+    <value>28.6</value>
+  </dataset>
+  <dataset label="Grüne" color="#00ff00">
+    <value>8.9</value>
+    <value>14.7</value>
+    <value>11.6</value>
+  </dataset>
+  <dataset label="FDP" color="#ffff00">
+    <value>10.7</value>
+    <value>11.4</value>
+    <value>4.3</value>
+  </dataset>
+  <dataset label="AfD" color="#0000ff">
+    <value>12.6</value>
+    <value>10.4</value>
+    <value>20.8</value>
+  </dataset>
+  <dataset label="Die Linke" color="#ff00ff">
+    <value>9.2</value>
+    <value>4.9</value>
+    <value>8.8</value>
+  </dataset>
+  <dataset label="Sonstige" color="#7f7f7f">
+    <value>5.0</value>
+    <value>8.7</value>
+    <value>9.6</value>
+  </dataset>
+</chart>
