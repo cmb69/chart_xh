@@ -52,7 +52,7 @@ class InfoCommand
             "checks" => [
                 $this->checkPhpVersion("8.0.0"),
                 $this->checkXHVersion("1.7.0"),
-                $this->checkPlibVersion("1.9"),
+                $this->checkPlibVersion("1.10"),
                 $this->checkWritability($this->pluginFolder . "config/"),
                 $this->checkWritability($this->pluginFolder . "css/"),
                 $this->checkWritability($this->pluginFolder . "languages/"),

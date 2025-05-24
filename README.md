@@ -13,7 +13,7 @@
 
 Chart_XH is a plugin for [CMSimple_XH](https://cmsimple-xh.org/).
 It requires CMSimple_XH ≥ 1.7.0, and PHP ≥ 8.0.0.
-Chart_XH also requires [Plib_XH](https://github.com/cmb69/plib_xh) ≥ 1.9;
+Chart_XH also requires [Plib_XH](https://github.com/cmb69/plib_xh) ≥ 1.10;
 if that is not already installed (see *Settings*→*Info*),
 get the [lastest release](https://github.com/cmb69/plib_xh/releases/latest),
 and install it.

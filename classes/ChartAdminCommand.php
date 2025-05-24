@@ -142,25 +142,9 @@ class ChartAdminCommand
         $charts = $this->store->find('/[a-z0-9\-]+\.xml$/');
         return Response::create($this->view->render("admin", [
             "errors" => $errors,
-            "charts" => $this->chartDtos($request, $charts),
+            "charts" => array_map(fn ($chart) => basename($chart, ".xml"), $charts),
+            "selected" => $request->get("chart_name") ?? "",
         ]))->withTitle("Chart – " . $this->view->text("menu_main"));
-    }
-
-    /**
-     * @param list<string> $charts
-     * @return list<object{name:string,checked:string}>
-     */
-    private function chartDtos(Request $request, array $charts): array
-    {
-        $res = [];
-        foreach ($charts as $chart) {
-            $name = basename($chart, ".xml");
-            $res[] = (object) [
-                "name" => $name,
-                "checked" => $request->get("chart_name") === $name ? "checked" : "",
-            ];
-        }
-        return $res;
     }
 
     /**

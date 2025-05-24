@@ -7,7 +7,8 @@ if (!defined("CMSIMPLE_XH_VERSION")) {http_response_code(403); exit;}
 /**
  * @var View $this
  * @var list<string> $errors
- * @var list<object{name:string,checked:string}> $charts
+ * @var list<string> $charts
+ * @var string $selected
  */
 ?>
 
@@ -23,8 +24,8 @@ if (!defined("CMSIMPLE_XH_VERSION")) {http_response_code(403); exit;}
 <?foreach ($charts as $chart):?>
       <li>
         <label>
-          <input type="radio" name="chart_name" value="<?=$this->esc($chart->name)?>" <?=$this->esc($chart->checked)?>>
-          <span><?=$this->esc($chart->name)?></span>
+          <input type="radio" name="chart_name" value="<?=$this->esc($chart)?>" <?=$this->checked($chart, $selected)?>>
+          <span><?=$this->esc($chart)?></span>
         </label>
       </li>
 <?endforeach?>

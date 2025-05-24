@@ -42,7 +42,7 @@ if (!defined("CMSIMPLE_XH_VERSION")) {http_response_code(403); exit;}
         <span><?=$this->text("label_type")?></span>
         <select name="type">
 <?foreach ($chart_types as $chart_type):?>
-          <option value="<?=$this->esc($chart_type)?>" <?=$chart_type === $chart->type ? "selected" : ""?>><?=$this->text("label_type_$chart_type")?></option>
+          <option value="<?=$this->esc($chart_type)?>" <?=$this->selected($chart_type, $chart->type)?>><?=$this->text("label_type_$chart_type")?></option>
 <?endforeach?>
         </select>
       </label>
