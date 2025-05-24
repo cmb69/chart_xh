@@ -29,8 +29,11 @@ use Plib\DocumentStore2;
 
 final class Chart implements Document2
 {
+    public const TYPES = ["line", "bar"];
+
     private string $name;
     private string $caption;
+    private string $type;
     /** @var list<string> */
     private array $labels = [];
     /** @var list<Dataset> */
@@ -38,7 +41,7 @@ final class Chart implements Document2
 
     public static function new(string $key): self
     {
-        return new self(basename($key, ".xml"), "");
+        return new self(basename($key, ".xml"), "", "line");
     }
 
     public static function fromString(string $contents, string $key): ?self
@@ -55,7 +58,7 @@ final class Chart implements Document2
         }
         assert($doc->documentElement instanceof DOMElement);
         $chart = $doc->documentElement;
-        $that = new self(basename($key, ".xml"), $chart->getAttribute("caption"));
+        $that = new self(basename($key, ".xml"), $chart->getAttribute("caption"), $chart->getAttribute("type"));
         foreach ($chart->childNodes as $childNode) {
             assert($childNode instanceof DOMNode);
             if ($childNode->nodeName === "label") {
@@ -86,10 +89,11 @@ final class Chart implements Document2
         return $store->update("$name.xml", self::class);
     }
 
-    public function __construct(string $name, string $caption)
+    public function __construct(string $name, string $caption, string $type)
     {
         $this->name = $name;
         $this->caption = $caption;
+        $this->type = $type;
     }
 
     public function name(): string
@@ -99,8 +103,12 @@ final class Chart implements Document2
 
     public function caption(): string
     {
-
         return $this->caption;
+    }
+
+    public function type(): string
+    {
+        return $this->type;
     }
 
     /** @return list<string> */
@@ -118,6 +126,11 @@ final class Chart implements Document2
     public function setCaption(string $caption): void
     {
         $this->caption = $caption;
+    }
+
+    public function setType(string $type): void
+    {
+        $this->type = $type;
     }
 
     public function purgeLabels(): void
@@ -145,6 +158,7 @@ final class Chart implements Document2
         $doc = new DOMDocument('1.0', 'UTF-8');
         $chart = $doc->createElement('chart');
         $chart->setAttribute("caption", $this->caption);
+        $chart->setAttribute("type", $this->type);
         $doc->appendChild($chart);
         foreach ($this->labels as $label) {
             $elt = $doc->createElement("label");

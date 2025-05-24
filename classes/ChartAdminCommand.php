@@ -72,6 +72,7 @@ class ChartAdminCommand
         $dto = (object) [
             "name" => "",
             "caption" => "",
+            "type" => Chart::TYPES[0],
             "labels" => "",
             "datasets" => "[]",
         ];
@@ -163,7 +164,7 @@ class ChartAdminCommand
     }
 
     /**
-     * @param object{name:string,caption:string} $dto
+     * @param object{name:string,caption:string,type:string,labels:string,datasets:string} $dto
      * @param iterable<object{label:string,color:string,values:string}> $datasets
      * @param list<string> $errors
      */
@@ -178,13 +179,14 @@ class ChartAdminCommand
             "errors" => $errors,
             "name_disabled" => $new ? "" : "disabled",
             "chart" => $dto,
+            "chart_types" => Chart::TYPES,
             "datasets" => $datasets,
             "token" => $this->csrfProtector->token(),
             "script" => $request->url()->path($this->script())->with("v", Dic::VERSION)->relative(),
         ]))->withTitle("Chart – " . $this->view->text("label_edit"));
     }
 
-    /** @return object{name:string,caption:string,labels:string,datasets:string} */
+    /** @return object{name:string,caption:string,type:string,labels:string,datasets:string} */
     private function chartToDto(Chart $chart)
     {
         $datasets = [];
@@ -198,6 +200,7 @@ class ChartAdminCommand
         return (object) [
             "name" => $chart->name(),
             "caption" => $chart->caption(),
+            "type" => $chart->type(),
             "labels" => implode(",", $chart->labels()),
             "datasets" => (string) json_encode($datasets),
         ];
@@ -215,21 +218,23 @@ class ChartAdminCommand
         }
     }
 
-    /** @return object{name:string,caption:string,labels:string,datasets:string} */
+    /** @return object{name:string,caption:string,type:string,labels:string,datasets:string} */
     private function requestToDto(Request $request)
     {
         return (object) [
             "name" => $request->post("name") ?? $request->get("maps_map") ?? "",
             "caption" => $request->post("caption") ?? "",
+            "type" => $request->post("type") ?? Chart::TYPES[0],
             "labels" => $request->post("labels") ?? "",
             "datasets" => $request->post("datasets") ?? "",
         ];
     }
 
-    /** @param object{name:string,caption:string,labels:string,datasets:string} $dto */
+    /** @param object{name:string,caption:string,type:string,labels:string,datasets:string} $dto */
     private function updateChartFromDto(Chart $chart, $dto): void
     {
         $chart->setCaption($dto->caption);
+        $chart->setType($dto->type);
         $chart->purgeLabels();
         foreach (array_map("trim", explode(",", $dto->labels)) as $label) {
             $chart->addLabel($label);

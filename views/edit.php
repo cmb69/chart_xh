@@ -8,7 +8,8 @@ if (!defined("CMSIMPLE_XH_VERSION")) {http_response_code(403); exit;}
 /**
  * @var View $this
  * @var list<string> $errors
- * @var object{name:string,caption:string,labels:string,datasets:string} $chart
+ * @var object{name:string,caption:string,type:string,labels:string,datasets:string} $chart
+ * @var list<string> $chart_types
  * @var list<object{label:string,color:string,values:string}> $datasets
  * @var string $name_disabled
  * @var string $token
@@ -34,6 +35,16 @@ if (!defined("CMSIMPLE_XH_VERSION")) {http_response_code(403); exit;}
       <label>
         <span><?=$this->text("label_caption")?></span>
         <textarea name="caption"><?=$this->esc($chart->caption)?></textarea>
+      </label>
+    </p>
+    <p>
+      <label>
+        <span><?=$this->text("label_type")?></span>
+        <select name="type">
+<?foreach ($chart_types as $chart_type):?>
+          <option value="<?=$this->esc($chart_type)?>" <?=$chart_type === $chart->type ? "selected" : ""?>><?=$this->text("label_type_$chart_type")?></option>
+<?endforeach?>
+        </select>
       </label>
     </p>
     <p class="chart_labels">

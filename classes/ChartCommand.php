@@ -66,7 +66,7 @@ class ChartCommand
             ];
         }
         return (object) [
-            "type" => "line",
+            "type" => $chart->type(),
             "data" => (object) [
                 "labels" => $chart->labels(),
                 "datasets" => $datasets,
