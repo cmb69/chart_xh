@@ -22,6 +22,7 @@
 namespace Chart;
 
 use Chart\Model\Chart;
+use Chart\Model\PowerChart;
 use Plib\DocumentStore2;
 use Plib\Response;
 use Plib\View;
@@ -39,17 +40,21 @@ class ChartCommand
         $this->view = $view;
     }
 
-    public function __invoke(string $name): Response
+    public function __invoke(string $name, bool $advanced = false): Response
     {
-        $chart = Chart::read($name, $this->store);
+        if ($advanced) {
+            $chart = PowerChart::read($name, $this->store);
+        } else {
+            $chart = Chart::read($name, $this->store);
+        }
         if ($chart === null) {
             return Response::create($this->view->message("fail", "error_load", $name));
         }
         return Response::create($this->view->render("chart", [
-            "caption" => $chart->caption(),
+            "caption" => $advanced ? "" : $chart->caption(),
             "chart_js" => $this->pluginFolder . "chartjs/chart.umd.js",
             "script" => $this->pluginFolder . "chart.js",
-            "js_conf" => $this->jsConf($chart),
+            "js_conf" => $advanced ? $chart->jsConf() : $this->jsConf($chart),
         ]));
     }
 

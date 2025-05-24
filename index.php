@@ -25,3 +25,8 @@ function chart(string $name): string
 {
     return Dic::chartCommand()($name)();
 }
+
+function chart_advanced(string $name): string
+{
+    return Dic::chartCommand()($name, true)();
+}
