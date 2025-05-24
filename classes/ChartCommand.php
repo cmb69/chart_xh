@@ -65,13 +65,13 @@ class ChartCommand
                 "data" => $dataset->values(),
             ];
         }
-        return (object) [
+        return [
             "type" => $chart->type(),
-            "data" => (object) [
+            "data" => [
                 "labels" => $chart->labels(),
                 "datasets" => $datasets,
             ],
-            "options" => (object) [
+            "options" => [
                 "spanGaps" => true,
             ],
         ];
