@@ -19,6 +19,7 @@ $plugin_tx['chart']['label_save']="Speichern";
 $plugin_tx['chart']['label_transposed']="transponiert";
 $plugin_tx['chart']['label_type']="Typ";
 $plugin_tx['chart']['label_type_bar']="Säule";
+$plugin_tx['chart']['label_type_doughnut']="Ring";
 $plugin_tx['chart']['label_type_line']="Linie";
 $plugin_tx['chart']['label_type_pie']="Kreis";
 $plugin_tx['chart']['label_values']="Werte";

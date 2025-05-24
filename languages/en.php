@@ -19,6 +19,7 @@ $plugin_tx['chart']['label_save']="Save";
 $plugin_tx['chart']['label_transposed']="transposed";
 $plugin_tx['chart']['label_type']="Type";
 $plugin_tx['chart']['label_type_bar']="Bar";
+$plugin_tx['chart']['label_type_doughnut']="Doughnut";
 $plugin_tx['chart']['label_type_line']="Line";
 $plugin_tx['chart']['label_type_pie']="Pie";
 $plugin_tx['chart']['label_values']="Values";
