@@ -56,19 +56,36 @@ class ChartCommand
     /** @return mixed */
     private function jsConf(Chart $chart)
     {
-        $datasets = [];
-        foreach ($chart->datasets() as $dataset) {
-            $datasets[] = [
-                "label" => $dataset->label(),
-                "backgroundColor" => $dataset->color(),
-                "borderColor" => $dataset->color(),
-                "data" => $dataset->values(),
-            ];
+        if ($chart->type() === "pie") {
+            $labels = [];
+            $colors = [];
+            $data = [];
+            foreach ($chart->datasets() as $dataset) {
+                $labels[] = $dataset->label();
+                $colors[] = $dataset->color();
+                $data[] = array_sum($dataset->values());
+            }
+            $datasets = [[
+                "backgroundColor" => $colors,
+                "borderColor" => $colors,
+                "data" => $data,
+            ]];
+        } else {
+            $labels = $chart->labels();
+            $datasets = [];
+            foreach ($chart->datasets() as $dataset) {
+                $datasets[] = [
+                    "label" => $dataset->label(),
+                    "backgroundColor" => $dataset->color(),
+                    "borderColor" => $dataset->color(),
+                    "data" => $dataset->values(),
+                ];
+            }
         }
         return [
             "type" => $chart->type(),
             "data" => [
-                "labels" => $chart->labels(),
+                "labels" => $labels,
                 "datasets" => $datasets,
             ],
             "options" => [

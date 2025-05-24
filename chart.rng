@@ -5,6 +5,7 @@
     <choice>
       <value>line</value>
       <value>bar</value>
+      <value>pie</value>
     </choice>
   </attribute>
   <zeroOrMore>
