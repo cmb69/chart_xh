@@ -28,6 +28,7 @@ $plugin_tx['chart']['label_type_pie']="Kreis";
 $plugin_tx['chart']['label_type_polar-area']="Polar-Area";
 $plugin_tx['chart']['label_values']="Werte";
 
+$plugin_tx['chart']['help_caption']="(HTML)";
 $plugin_tx['chart']['help_labels']="(durch Komma getrennte Zeichenfolgen)";
 $plugin_tx['chart']['help_name']="(nur a-z, 0-9 und Bindestriche)";
 $plugin_tx['chart']['help_values']="(durch Komma getrennte Zahlen; Dezimaltrenner ist Punkt)";

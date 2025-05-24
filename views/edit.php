@@ -34,6 +34,7 @@ if (!defined("CMSIMPLE_XH_VERSION")) {http_response_code(403); exit;}
     <p>
       <label>
         <span><?=$this->text("label_caption")?></span>
+        <span class="chart_help"><?=$this->text("help_caption")?></span>
         <textarea name="caption"><?=$this->esc($chart->caption)?></textarea>
       </label>
     </p>

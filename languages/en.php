@@ -28,6 +28,7 @@ $plugin_tx['chart']['label_type_pie']="Pie";
 $plugin_tx['chart']['label_type_polar-area']="Polar Area";
 $plugin_tx['chart']['label_values']="Values";
 
+$plugin_tx['chart']['help_caption']="(HTML)";
 $plugin_tx['chart']['help_labels']="(comma separated strings)";
 $plugin_tx['chart']['help_name']="(only a-z, 0-9, and hyhpens)";
 $plugin_tx['chart']['help_values']="(comma separated numbers; decimal separator is dot)";

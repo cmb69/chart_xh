@@ -23,10 +23,10 @@ use Chart\Dic;
 
 function chart(string $name): string
 {
-    return Dic::chartCommand()($name)();
+    return Dic::chartCommand()($name, false, "")();
 }
 
-function chart_advanced(string $name): string
+function chart_advanced(string $name, string $caption): string
 {
-    return Dic::chartCommand()($name, true)();
+    return Dic::chartCommand()($name, true, $caption)();
 }

@@ -42,7 +42,7 @@ class ChartCommand
         $this->view = $view;
     }
 
-    public function __invoke(string $name, bool $advanced = false): Response
+    public function __invoke(string $name, bool $advanced, string $caption): Response
     {
         if ($advanced) {
             $chart = PowerChart::read($name, $this->store);
@@ -53,7 +53,7 @@ class ChartCommand
             return Response::create($this->view->message("fail", "error_load", $name));
         }
         return Response::create($this->view->render("chart", [
-            "caption" => $advanced ? "" : $chart->caption(),
+            "caption" => $advanced ? $caption : $chart->caption(),
             "chart_js" => $this->pluginFolder . "chartjs/chart.umd.js",
             "script" => $this->pluginFolder . "chart.js",
             "js_conf" => $advanced ? $chart->jsConf() : $this->configurator->configure($chart),
