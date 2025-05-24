@@ -24,10 +24,10 @@ namespace Chart\Model;
 use DOMDocument;
 use DOMElement;
 use DOMNode;
-use Plib\Document2;
-use Plib\DocumentStore2;
+use Plib\Document2 as Document;
+use Plib\DocumentStore2 as DocumentStore;
 
-final class Chart implements Document2
+final class Chart implements Document
 {
     public const TYPES = [
         "line",
@@ -87,19 +87,19 @@ final class Chart implements Document2
         return $that;
     }
 
-    public static function create(string $name, DocumentStore2 $store): self
+    public static function create(string $name, DocumentStore $store): self
     {
         $that = $store->create("$name.xml", self::class);
         assert($that instanceof self);
         return $that;
     }
 
-    public static function read(string $name, DocumentStore2 $store): ?self
+    public static function read(string $name, DocumentStore $store): ?self
     {
         return $store->read("$name.xml", self::class);
     }
 
-    public static function update(string $name, DocumentStore2 $store): ?self
+    public static function update(string $name, DocumentStore $store): ?self
     {
         return $store->update("$name.xml", self::class);
     }
