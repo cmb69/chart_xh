@@ -5,9 +5,12 @@
     <choice>
       <value>line</value>
       <value>bar</value>
+      <value>horizontal-bar</value>
       <value>pie</value>
       <value>doughnut</value>
-      <value>polarArea</value>
+      <value>semi-pie</value>
+      <value>semi-doughnut</value>
+      <value>polar-area</value>
     </choice>
   </attribute>
   <attribute name="transposed"/>

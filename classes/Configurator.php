@@ -29,13 +29,29 @@ class Configurator
     public function configure(Chart $chart)
     {
         return [
-            "type" => $chart->type(),
+            "type" => $this->type($chart),
             "data" => [
                 "labels" => $this->labels($chart),
                 "datasets" => $this->datasets($chart),
             ],
             "options" => $this->options($chart),
         ];
+    }
+
+    private function type(Chart $chart): string
+    {
+        switch ($chart->type()) {
+            case "horizontal-bar":
+                return "bar";
+            case "semi-pie":
+                return "pie";
+            case "semi-doughnut":
+                return "doughnut";
+            case "polar-area":
+                return "polarArea";
+            default:
+                return $chart->type();
+        }
     }
 
     /** @return list<array{label:string,data:mixed,backgroundColor:mixed,borderColor:mixed}> */
@@ -90,6 +106,13 @@ class Configurator
         $options = [
             "spanGaps" => true,
         ];
+        if ($chart->type() === "horizontal-bar") {
+            $options["indexAxis"] = "y";
+        }
+        if (in_array($chart->type(), ["semi-pie", "semi-doughnut"], true)) {
+            $options["rotation"] = -90;
+            $options["circumference"] = 180;
+        }
         if ($chart->transposed()) {
             $options["plugins"]["legend"]["labels"] = [
                 "boxWidth" => 0,

@@ -20,9 +20,12 @@ $plugin_tx['chart']['label_transposed']="transposed";
 $plugin_tx['chart']['label_type']="Type";
 $plugin_tx['chart']['label_type_bar']="Bar";
 $plugin_tx['chart']['label_type_doughnut']="Doughnut";
+$plugin_tx['chart']['label_type_semi-doughnut']="Semi-Doughnut";
+$plugin_tx['chart']['label_type_semi-pie']="Semi-Pie";
+$plugin_tx['chart']['label_type_horizontal-bar']="Bar (horizontal)";
 $plugin_tx['chart']['label_type_line']="Line";
 $plugin_tx['chart']['label_type_pie']="Pie";
-$plugin_tx['chart']['label_type_polarArea']="Polar Area";
+$plugin_tx['chart']['label_type_polar-area']="Polar Area";
 $plugin_tx['chart']['label_values']="Values";
 
 $plugin_tx['chart']['help_labels']="(comma separated strings)";
