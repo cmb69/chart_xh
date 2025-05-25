@@ -42,9 +42,9 @@ class ChartCommand
         $this->view = $view;
     }
 
-    public function __invoke(string $name, bool $advanced, string $caption): Response
+    public function __invoke(string $name, ?string $caption): Response
     {
-        if ($advanced) {
+        if ($caption !== null) {
             $chart = PowerChart::read($name, $this->store);
         } else {
             $chart = Chart::read($name, $this->store);
@@ -53,10 +53,12 @@ class ChartCommand
             return Response::create($this->view->message("fail", "error_load", $name));
         }
         return Response::create($this->view->render("chart", [
-            "caption" => $advanced ? $caption : $chart->caption(),
+            "caption" => $caption ?? $chart->caption(),
             "chart_js" => $this->pluginFolder . "chartjs/chart.umd.js",
             "script" => $this->pluginFolder . "chart.js",
-            "js_conf" => $advanced ? json_decode($chart->json(), true) : $this->configurator->configure($chart),
+            "js_conf" => $caption !== null
+                ? json_decode($chart->json(), true)
+                : $this->configurator->configure($chart),
         ]));
     }
 }

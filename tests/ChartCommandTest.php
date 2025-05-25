@@ -4,6 +4,7 @@ namespace Chart;
 
 use ApprovalTests\Approvals;
 use Chart\Model\Chart;
+use Chart\Model\PowerChart;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\TestCase;
 use Plib\DocumentStore2;
@@ -24,6 +25,8 @@ class ChartCommandTest extends TestCase
         $dataset->addValue(1);
         $dataset->addValue(2);
         $dataset->addValue(3);
+        $powerchart = PowerChart::create("test", $this->store);
+        $powerchart->setJson('{"type": "bar"}');
         $this->store->commit();
         $this->configurator = new Configurator();
         $this->view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["chart"]);
@@ -36,13 +39,19 @@ class ChartCommandTest extends TestCase
 
     public function testRendersChart(): void
     {
-        $response = $this->sut()("test", false, "");
+        $response = $this->sut()("test", null);
         Approvals::verifyHtml($response->output());
     }
 
     public function testReportsUnreadableChart(): void
     {
-        $response = $this->sut()("wrong", false, "");
+        $response = $this->sut()("wrong", null);
         $this->assertStringContainsString("Cannot load the chart “wrong”!", $response->output());
+    }
+
+    public function testRendersPowerChart(): void
+    {
+        $response = $this->sut()("test", "A Power Chart");
+        Approvals::verifyHtml($response->output());
     }
 }
