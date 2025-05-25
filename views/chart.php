@@ -15,5 +15,5 @@ use Plib\View;
 <script type="module" src="<?=$this->esc($script)?>"></script>
 <figure class="chart_chart" data-chart-config='<?=$this->json($js_conf)?>'>
   <figcaption><?=$this->raw($caption)?></figcaption>
-  <canvas width="400" height="400"></canvas>
+  <canvas width="320"></canvas>
 </figure>

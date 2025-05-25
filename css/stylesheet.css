@@ -31,6 +31,9 @@ article.chart_edit form {
     grid-template-columns: 1fr 1fr;
     column-gap: 1em;
 }
+article.chart_edit label {
+    display: block;
+}
 article.chart_edit input,
 article.chart_edit select,
 article.chart_edit textarea {

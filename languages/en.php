@@ -4,6 +4,7 @@ $plugin_tx['chart']['menu_main']="Administration";
 
 $plugin_tx['chart']['label_add_dataset']="Add Dataset";
 $plugin_tx['chart']['label_apply_values']="Apply Values";
+$plugin_tx['chart']['label_aspect_ratio']="Aspect Ratio";
 $plugin_tx['chart']['label_caption']="Caption";
 $plugin_tx['chart']['label_color']="Color";
 $plugin_tx['chart']['label_datasets']="Datasets";
@@ -28,6 +29,7 @@ $plugin_tx['chart']['label_type_pie']="Pie";
 $plugin_tx['chart']['label_type_polar-area']="Polar Area";
 $plugin_tx['chart']['label_values']="Values";
 
+$plugin_tx['chart']['help_aspect_ratio']="(with/height)";
 $plugin_tx['chart']['help_caption']="(HTML)";
 $plugin_tx['chart']['help_labels']="(comma separated strings)";
 $plugin_tx['chart']['help_name']="(only a-z, 0-9, and hyhpens)";

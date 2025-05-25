@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chart caption="Voting" type="bar" transposed="">
+<chart caption="Voting" type="bar" transposed="" aspect-ratio="16/9">
   <label>2017</label>
   <label>2021</label>
   <label>2025</label>

@@ -103,6 +103,7 @@
         ]
     },
     "options": {
+        "aspectRatio": 1.7777777777777777,
         "plugins": {
             "legend": {
                 "labels": {

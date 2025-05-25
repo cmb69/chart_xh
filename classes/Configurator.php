@@ -105,6 +105,7 @@ class Configurator
     {
         $options = [
             "spanGaps" => true,
+            "aspectRatio" => $this->aspectRatio($chart),
         ];
         if ($chart->type() === "horizontal-bar") {
             $options["indexAxis"] = "y";
@@ -120,5 +121,15 @@ class Configurator
             ];
         }
         return $options;
+    }
+
+    private function aspectRatio(Chart $chart): float
+    {
+        $parts = explode("/", $chart->aspectRatio());
+        if (count($parts) !== 2) {
+            return 1;
+        }
+        [$num, $denom] = $parts;
+        return (int) $num / ((int) $denom ?: 1);
     }
 }

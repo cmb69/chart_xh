@@ -44,6 +44,7 @@ final class Chart implements Document
     private string $caption;
     private string $type;
     private bool $transposed;
+    private string $aspectRatio;
     /** @var list<string> */
     private array $labels = [];
     /** @var list<Dataset> */
@@ -51,7 +52,7 @@ final class Chart implements Document
 
     public static function new(string $key): self
     {
-        return new self(basename($key, ".xml"), "", "line", false);
+        return new self(basename($key, ".xml"), "", "line", false, "3/2");
     }
 
     public static function fromString(string $contents, string $key): ?self
@@ -72,7 +73,8 @@ final class Chart implements Document
             basename($key, ".xml"),
             $chart->getAttribute("caption"),
             $chart->getAttribute("type"),
-            (bool) $chart->getAttribute("transposed")
+            (bool) $chart->getAttribute("transposed"),
+            $chart->getAttribute("aspect-ratio")
         );
         foreach ($chart->childNodes as $childNode) {
             assert($childNode instanceof DOMNode);
@@ -104,12 +106,13 @@ final class Chart implements Document
         return $store->update("$name.xml", self::class);
     }
 
-    public function __construct(string $name, string $caption, string $type, bool $transposed)
+    public function __construct(string $name, string $caption, string $type, bool $transposed, string $aspectRatio)
     {
         $this->name = $name;
         $this->caption = $caption;
         $this->type = $type;
         $this->transposed = $transposed;
+        $this->aspectRatio = $aspectRatio;
     }
 
     public function name(): string
@@ -130,6 +133,11 @@ final class Chart implements Document
     public function transposed(): bool
     {
         return $this->transposed;
+    }
+
+    public function aspectRatio(): string
+    {
+        return $this->aspectRatio;
     }
 
     /** @return list<string> */
@@ -159,6 +167,11 @@ final class Chart implements Document
         $this->transposed = $transposed;
     }
 
+    public function setAspectRatio(string $aspectRatio): void
+    {
+        $this->aspectRatio = $aspectRatio;
+    }
+
     public function purgeLabels(): void
     {
         $this->labels = [];
@@ -186,6 +199,7 @@ final class Chart implements Document
         $chart->setAttribute("caption", $this->caption);
         $chart->setAttribute("type", $this->type);
         $chart->setAttribute("transposed", (string) $this->transposed);
+        $chart->setAttribute("aspect-ratio", $this->aspectRatio);
         $doc->appendChild($chart);
         foreach ($this->labels as $label) {
             $elt = $doc->createElement("label");

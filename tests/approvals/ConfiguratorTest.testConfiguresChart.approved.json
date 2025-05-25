@@ -79,6 +79,7 @@
         ]
     },
     "options": {
+        "aspectRatio": 1.7777777777777777,
         "spanGaps": true
     },
     "type": "bar"

@@ -8,7 +8,7 @@ if (!defined("CMSIMPLE_XH_VERSION")) {http_response_code(403); exit;}
 /**
  * @var View $this
  * @var list<string> $errors
- * @var object{name:string,caption:string,type:string,transposed:bool,labels:string,datasets:string} $chart
+ * @var object{name:string,caption:string,type:string,transposed:bool,aspect_ratio:string,labels:string,datasets:string} $chart
  * @var list<string> $chart_types
  * @var list<object{label:string,color:string,values:string}> $datasets
  * @var string $name_disabled
@@ -47,11 +47,16 @@ if (!defined("CMSIMPLE_XH_VERSION")) {http_response_code(403); exit;}
 <?endforeach?>
         </select>
       </label>
-    </p>
-    <p>
       <label>
         <input type="checkbox" name="transposed" <?=$this->checked($chart->transposed)?>>
         <span>transposed</span>
+      </label>
+    </p>
+    <p>
+      <label>
+        <span><?=$this->text("label_aspect_ratio")?></span>
+        <span class="maps_help"><?=$this->text("help_aspect_ratio")?></span>
+        <input name="aspect_ratio" value="<?=$this->esc($chart->aspect_ratio)?>" required pattern="\d+/\d+">
     <p class="chart_labels">
       <label>
         <span><?=$this->text("label_labels")?></span>

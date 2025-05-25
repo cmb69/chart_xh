@@ -4,6 +4,7 @@ $plugin_tx['chart']['menu_main']="Verwaltung";
 
 $plugin_tx['chart']['label_add_dataset']="Datensatz hinzufügen";
 $plugin_tx['chart']['label_apply_values']="Werte übernehmen";
+$plugin_tx['chart']['label_aspect_ratio']="Seitenverhältnis";
 $plugin_tx['chart']['label_caption']="Überschrift";
 $plugin_tx['chart']['label_color']="Farbe";
 $plugin_tx['chart']['label_datasets']="Datensätze";
@@ -28,6 +29,7 @@ $plugin_tx['chart']['label_type_pie']="Kreis";
 $plugin_tx['chart']['label_type_polar-area']="Polar-Area";
 $plugin_tx['chart']['label_values']="Werte";
 
+$plugin_tx['chart']['help_aspect_ratio']="(Breite/Höhe)";
 $plugin_tx['chart']['help_caption']="(HTML)";
 $plugin_tx['chart']['help_labels']="(durch Komma getrennte Zeichenfolgen)";
 $plugin_tx['chart']['help_name']="(nur a-z, 0-9 und Bindestriche)";
