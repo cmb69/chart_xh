@@ -1,40 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chart caption="Voting" type="bar" transposed="" aspect-ratio="16/9">
+<chart caption="German Federal Elections" type="bar" transposed="0" aspect-ratio="16/9">
   <label>2017</label>
   <label>2021</label>
   <label>2025</label>
-  <dataset label="SPD" color="#ff0000">
+  <dataset label="SPD" color="#c0003d">
     <value>20.5</value>
     <value>25.7</value>
     <value>16.4</value>
   </dataset>
-  <dataset label="CDU/CSU" color="#000000">
+  <dataset label="CDU/CSU" color="#576164">
     <value>33.0</value>
     <value>24.2</value>
     <value>28.6</value>
   </dataset>
-  <dataset label="Grüne" color="#00ff00">
+  <dataset label="Grüne" color="#008549">
     <value>8.9</value>
     <value>14.7</value>
     <value>11.6</value>
   </dataset>
-  <dataset label="FDP" color="#ffff00">
+  <dataset label="FDP" color="#f7bc3d">
     <value>10.7</value>
     <value>11.4</value>
     <value>4.3</value>
   </dataset>
-  <dataset label="AfD" color="#0000ff">
+  <dataset label="AfD" color="#80b6ec">
     <value>12.6</value>
     <value>10.4</value>
     <value>20.8</value>
   </dataset>
-  <dataset label="Die Linke" color="#ff00ff">
+  <dataset label="Die Linke" color="#5f316e">
     <value>9.2</value>
     <value>4.9</value>
     <value>8.8</value>
   </dataset>
-  <dataset label="Sonstige" color="#7f7f7f">
-    <value>5.0</value>
+  <dataset label="Sonstige" color="#bec5c9">
+    <value>5</value>
     <value>8.7</value>
     <value>9.6</value>
   </dataset>

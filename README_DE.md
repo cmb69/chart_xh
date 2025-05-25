@@ -3,6 +3,7 @@
 - [Voraussetzungen](#voraussetzungen)
 - [Download](#download)
 - [Installation](#installation)
+- [Schnellstart](#schnellstart)
 - [Einstellungen](#einstellungen)
 - [Verwendung](#verwendung)
 - [Fehlerbehebung](#fehlerbehebung)
@@ -35,6 +36,52 @@ Die Installation erfolgt wie bei vielen anderen CMSimple_XH-Plugins auch.
    beschreibbar.
 1. Prüfen Sie unter `Plugins` → `Chart` im Administrationsbereich,
    ob alle Voraussetzungen erfüllt sind.
+
+## Schnellstart
+
+Im `chart/examples/` Ordner befindet sich das Beispieldiagramm `voting.xml`.
+Kopiere diese Datei in den Inhaltsordner von CMSimple_XH (`content/chart/`).
+Dann binde das Beispieldiagramm auf einer Seite ein:
+
+    {{{chart('voting')}}}
+
+Wechsle in den Ansichtsmodus, wo du ein Säulendiagramm der Ergebnisse der
+Bundestagswahlen in drei Kategorien für die Jahre 2017, 2021 und 2025 siehst.
+Nun gehe in die Plugin-Verwaltung (`Plugins` → `Chart` → `Verwaltung`), wähle
+`voting` und drücke `Bearbeiten`. Dann siehst du ein Formular wo das Diagramm
+bearbeitet werden kann. Fürs erste wollen wir nur die Gruppierung ändern, so dass
+die Ergebnisse der einzelnen Parteien direkt nebeneinander angezeigt werden.
+Dazu hake `transposed` an und drücke `Speichern`. Gehe wieder zur Seite wo das
+Diagramm angezeigt wird, und du wirst den Unterschied sehen. Nun wollen wir das
+Diagramm als Halbring anstelle eines Säulendiagramms anzeigen. Gehe wieder zum
+Bearbeitungsformular, und wähle `Halbring` im `Typ` Dropdown-Menü. Speichern,
+und zurück zur Diagrammanzeige. Sieht ein bisschen komisch aus, da drei Jahre
+auf einmal dargestellt werden. Also wieder zurück zum Bearbeitungsformular,
+und entferne dort die Beschriftungen der beiden jüngsten Wahlen (das
+Beschriftungsfeld sollte nur noch `2017` enthalten). Speichern und das Diagramm
+anschauen. So kennt man das.
+
+Nun wieder zurück zum Bearbeitungsformular, wo du ein bisschen herumspielen kannst.
+Vielleicht möchtest du einen anderen Diagrammtyp ausprobieren, oder die Farben
+der Parteien ändern (dazu sollte es Farbwähler geben; falls nicht, dann erwäge
+die Verwendung eines zeitgemäßen Browsers). Vielleicht willst du die Reihenfolge
+der Datensätze ändern (dazu gibt es rechts Pfeilschalter), oder ein paar Datensätze
+löschen (dazu gibt es rechts Mülleimerschalter), oder auch einen neuen Datensatz
+anlegen (dazu gibt es einen Plusschalter oben in der Datensatztabelle). Und
+vielleicht möchtest du die Werte ändern; das geht direkt im Textfeld, aber du
+kannst auch den Bearbeitungschalter (Bleistift) nutzen, der dann numerische
+Eingabefelder anzeigt (die machen es einfacher, da im Textfeld als Dezimaltrenner
+der ungewohnte Punkt verwendet werden muss). Willst du Werte hinzufügen oder
+entfernen, musst du das im Textfeld tun. Du kannst auch verschiedene Seitenverhältnisse
+ausprobieren (die Breite des Diagramms ist immer 100%; das Seitenverhältnis
+bestimmt die Höhe).
+
+Abschließend möchtest du vielleicht ein eigenes Diagramm erstellen. Gehe wieder
+in die Verwaltung (`Plugins` → `Chart` → `Verwaltung`), drücke `Neu` und
+bearbeite das Diagramm wie zuvor. Der einzige Unterschied ist, dass du nun das
+`Name` Feld ausfüllen musst, das deaktiviert ist, wenn du ein bestehendes Diagramm
+bearbeitest. Danach kannst du das neue Diagramm anstelle des `voting` Beispiel-
+Diagramms anzeigen indem du den Pluginaufruf entsprechend änderst.
 
 ## Einstellungen
 

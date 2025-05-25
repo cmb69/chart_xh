@@ -3,6 +3,7 @@
 - [Requirements](#requirements)
 - [Download](#download)
 - [Installation](#installation)
+- [Quick Start](#quick-start)
 - [Settings](#settings)
 - [Usage](#usage)
 - [Troubleshooting](#troubleshooting)
@@ -35,6 +36,48 @@ The installation is done as with many other CMSimple_XH plugins.
     `languages/`.
 1.  Check under `Plugins` → `Chart` in the back-end of the website,
     if all requirements are fulfilled.
+
+## Quick Start
+
+There is a sample chart `voting.xml` in `chart/examples/`.  Copy the file into
+the contents folder of CMSimple_XH (`content/chart/`).  Then embed the sample
+chart on a page:
+
+    {{{chart('voting')}}}
+
+Switch to view mode, and you should see a bar chart showing the results of the
+German federal elections in three categories for the years 2017, 2021, and 2025.
+Now go to the plugin administration (`Plugins` → `Chart` → `Administration`),
+select `voting` and press `Edit`.  You see a form where you can edit the chart.
+For now, we only want to change the grouping, so that the votes for each party
+are shown right besides each other.  To that purpose, check `transposed`, and
+`Save`.  Go back to the page where the chart is shown, and you'll notice the
+difference.  Now we want to show the chart as a semi-doughnut chart instead of
+a bar chart.  Go to the edit form, and select `Semi-Doughnut` from the `Type`
+drop-down. Save and view the chart.  Looks a bit strange, because we have
+three years; so go back to the edit form, and remove the labels of the more
+recent elections (the labels contents should only be `2017`).  Save and view the
+chart again.  Looks more like we are used to.
+
+Now go back to the edit form, and play around a bit.  Maybe choose a
+different kind of chart type, or change the colors of the parties (there should
+be color pickers; otherwise consider to use a contemporary browser).  Maybe change
+the order of the datasets (there are arrow buttons on the right), or delete a couple
+of datasets (there are trash can buttons), or maybe add a new dataset (there is
+a plus button at the top of the dataset table).  And you may want to edit the
+values; you can do this directly in the textarea, but you can also use the edit
+button (pencil) where you get numeric input fields (makes it easier if you are
+accustomed to a decimal separator other that a dot).  If you want to add or remove
+values, you need to do that in the textarea directly.  Also you can try different
+aspect ratios (the width of the chart is always 100%; the aspect ratio determines
+the height).
+
+Finally, you may want to create your own chart.  Go back to the administration
+(`Plugins` → `Chart` → `Administration`), press `New`, and edit the chart like
+before.  The only difference is that you now have to fill in the `Name` field,
+which is disabled when you are editing an existing chart.  Afterwards, you can
+show the new chart instead of the `voting` sample chart by changing the plugin
+call accordingly.
 
 ## Settings
 
