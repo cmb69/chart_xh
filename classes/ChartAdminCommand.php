@@ -134,7 +134,7 @@ class ChartAdminCommand
     /** @param list<string> $errors */
     private function respondWithOverview(Request $request, array $errors = []): Response
     {
-        $charts = $this->store->find('/[a-z0-9\-]+\.xml$/');
+        $charts = $this->store->find('/^[a-z0-9\-]+\.xml$/');
         return Response::create($this->view->render("admin", [
             "errors" => $errors,
             "charts" => array_map(fn ($chart) => basename($chart, ".xml"), $charts),
