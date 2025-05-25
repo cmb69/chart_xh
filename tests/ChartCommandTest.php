@@ -13,6 +13,7 @@ use Plib\View;
 
 class ChartCommandTest extends TestCase
 {
+    private array $conf;
     private DocumentStore $store;
     private Configurator $configurator;
     private View $view;
@@ -20,6 +21,7 @@ class ChartCommandTest extends TestCase
     public function setUp(): void
     {
         vfsStream::setup("root");
+        $this->conf = XH_includeVar("./config/config.php", "plugin_cf")["chart"];
         $this->store = new DocumentStore(vfsStream::url("root/"));
         $chart = Chart::create("test", $this->store);
         $dataset = $chart->addDataset("one", "#ff0000");
@@ -35,7 +37,7 @@ class ChartCommandTest extends TestCase
 
     private function sut(): ChartCommand
     {
-        return new ChartCommand("./", $this->store, $this->configurator, $this->view);
+        return new ChartCommand("./", $this->conf, $this->store, $this->configurator, $this->view);
     }
 
     public function testRendersChart(): void
@@ -57,5 +59,16 @@ class ChartCommandTest extends TestCase
         $request = new FakeRequest();
         $response = $this->sut()("test", "A Power Chart", $request);
         Approvals::verifyHtml($response->output());
+    }
+
+    public function testFetchesChartJsIfConfigured(): void
+    {
+        $this->conf["chartjs_url"] = "https://cdn.jsdelivr.net/npm/chart.js@4.4.9/dist/chart.umd.min.js";
+        $request = new FakeRequest();
+        $response = $this->sut()("test", null, $request);
+        $this->assertStringContainsString(
+            "src=\"https://cdn.jsdelivr.net/npm/chart.js@4.4.9/dist/chart.umd.min.js\"",
+            $response->output()
+        );
     }
 }

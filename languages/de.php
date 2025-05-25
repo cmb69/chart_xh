@@ -55,3 +55,5 @@ $plugin_tx['chart']['syscheck_xhversion']="CMSimple_XH Version ≥ %s: %s";
 $plugin_tx['chart']['syscheck_writable']="%s ist schreibbar: %s";
 $plugin_tx['chart']['syscheck_good']="gut";
 $plugin_tx['chart']['syscheck_bad']="schlecht";
+
+$plugin_tx['chart']['cf_chartjs_url']="Die URL des Chart.js Skripts. Leer lassen, um die gebündelte Verions zu verwenden (empfohlen aus Datenschutzgründen). Soll ein öffentliches CDN verwendet werden, ist die URL hier einzugeben, z.B. https://cdn.jsdelivr.net/npm/chart.js@4.4.9/dist/chart.umd.min.js.";

@@ -32,9 +32,10 @@ class Dic
 
     public static function chartCommand(): ChartCommand
     {
-        global $pth;
+        global $pth, $plugin_cf;
         return new ChartCommand(
             $pth["folder"]["plugins"] . "chart/",
+            $plugin_cf["chart"],
             self::documentStore(),
             new Configurator(),
             self::view()

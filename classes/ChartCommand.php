@@ -31,13 +31,22 @@ use Plib\View;
 class ChartCommand
 {
     private string $pluginFolder;
+    /** @var array<string,string> */
+    private array $conf;
     private DocumentStore $store;
     private Configurator $configurator;
     private View $view;
 
-    public function __construct(string $pluginFolder, DocumentStore $store, Configurator $configurator, View $view)
-    {
+    /** @param array<string,string> $conf */
+    public function __construct(
+        string $pluginFolder,
+        array $conf,
+        DocumentStore $store,
+        Configurator $configurator,
+        View $view
+    ) {
         $this->pluginFolder = $pluginFolder;
+        $this->conf = $conf;
         $this->store = $store;
         $this->configurator = $configurator;
         $this->view = $view;
@@ -55,7 +64,7 @@ class ChartCommand
         }
         return Response::create($this->view->render("chart", [
             "caption" => $caption ?? $chart->caption(),
-            "chart_js" => $this->pluginFolder . "chartjs/chart.umd.js",
+            "chart_js" => $this->conf["chartjs_url"] ?: $this->pluginFolder . "chartjs/chart.umd.js",
             "script" => $request->url()->path($this->script())->with("v", Dic::VERSION)->relative(),
             "js_conf" => $caption !== null
                 ? json_decode($chart->json(), true)
