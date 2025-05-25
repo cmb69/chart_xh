@@ -56,7 +56,7 @@ class ChartCommand
             "caption" => $advanced ? $caption : $chart->caption(),
             "chart_js" => $this->pluginFolder . "chartjs/chart.umd.js",
             "script" => $this->pluginFolder . "chart.js",
-            "js_conf" => $advanced ? $chart->jsConf() : $this->configurator->configure($chart),
+            "js_conf" => $advanced ? json_decode($chart->json(), true) : $this->configurator->configure($chart),
         ]));
     }
 }

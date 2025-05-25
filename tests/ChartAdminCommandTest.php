@@ -4,6 +4,7 @@ namespace Chart;
 
 use ApprovalTests\Approvals;
 use Chart\Model\Chart;
+use Chart\Model\PowerChart;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
@@ -28,6 +29,8 @@ class ChartAdminCommandTest extends TestCase
         $dataset->addValue(1);
         $dataset->addValue(2);
         $dataset->addValue(3);
+        $powerchart = PowerChart::create("test", $this->store);
+        $powerchart->setJson("{}");
         $this->store->commit();
         $this->csrfProtector = $this->createStub(CsrfProtector::class);
         $this->csrfProtector->method("token")->willReturn("0123456789ABCDEF");
@@ -67,7 +70,7 @@ class ChartAdminCommandTest extends TestCase
         ]);
         $response = $this->sut()($request);
         $this->assertFileExists(vfsStream::url("root/new.xml"));
-        $this->assertSame("http://example.com/?&chart&admin=plugin_main", $response->location());
+        $this->assertSame("http://example.com/?&chart&admin=plugin_main&chart_name=new", $response->location());
     }
 
     public function testCreatingIsCsrfProtected(): void
@@ -200,6 +203,157 @@ class ChartAdminCommandTest extends TestCase
             "post" => [
                 "chart_do" => "",
                 "caption" => "a new caption",
+            ],
+        ]);
+        $response = $this->sut()($request);
+        $this->assertStringContainsString("Cannot save the chart “test”!", $response->output());
+    }
+
+    public function testRendersEditorForNewPowerChart(): void
+    {
+        $request = new FakeRequest(["url" => "http://example.com/?&chart&admin=plugin_main&action=create_power"]);
+        $response = $this->sut()($request);
+        $this->assertSame("Chart – Edit", $response->title());
+        Approvals::verifyHtml($response->output());
+    }
+
+    public function testCreatesNewPowerChart(): void
+    {
+        $this->csrfProtector->method("check")->willReturn(true);
+        $request = new FakeRequest([
+            "url" => "http://example.com/?&chart&admin=plugin_main&action=create_power",
+            "post" => [
+                "chart_do" => "",
+                "name" => "new",
+            ],
+        ]);
+        $response = $this->sut()($request);
+        $this->assertFileExists(vfsStream::url("root/new.json"));
+        $this->assertSame("http://example.com/?&chart&admin=plugin_main&chart_power_name=new", $response->location());
+    }
+
+    public function testCreatingPowerChartIsCsrfProtected(): void
+    {
+        $this->csrfProtector->method("check")->willReturn(false);
+        $request = new FakeRequest([
+            "url" => "http://example.com/?&chart&admin=plugin_main&action=create_power",
+            "post" => [
+                "chart_do" => "",
+                "name" => "new",
+            ],
+        ]);
+        $response = $this->sut()($request);
+        $this->assertStringContainsString("You are not authorized to conduct this action!", $response->output());
+    }
+
+    public function testReportsFailureToSaveNewPowerChart(): void
+    {
+        $this->csrfProtector->method("check")->willReturn(true);
+        vfsStream::setQuota(0);
+        $request = new FakeRequest([
+            "url" => "http://example.com/?&chart&admin=plugin_main&action=create_power",
+            "post" => [
+                "chart_do" => "",
+                "name" => "new",
+                "json" => "{}",
+            ],
+        ]);
+        $response = $this->sut()($request);
+        $this->assertStringContainsString("Cannot save the chart “new”!", $response->output());
+    }
+
+    public function testRendersEditorForEditingPowerChart(): void
+    {
+        $request = new FakeRequest([
+            "url" => "http://example.com/?&chart&admin=plugin_main&action=update_power&chart_power_name=test",
+        ]);
+        $response = $this->sut()($request);
+        $this->assertSame("Chart – Edit", $response->title());
+        Approvals::verifyHtml($response->output());
+    }
+
+    public function testsReportsThatNoPowerChartIsSelected(): void
+    {
+        $request = new FakeRequest([
+            "url" => "http://example.com/?&chart&admin=plugin_main&action=update_power",
+        ]);
+        $response = $this->sut()($request);
+        $this->assertStringContainsString("You did not select a chart!", $response->output());
+    }
+
+    public function testReportsFailureToLoadPowerChart(): void
+    {
+        $request = new FakeRequest([
+            "url" => "http://example.com/?&chart&admin=plugin_main&action=update_power&chart_power_name=does-not-exist",
+        ]);
+        $response = $this->sut()($request);
+        $this->assertStringContainsString("Cannot load the chart “does-not-exist”!", $response->output());
+    }
+
+    public function testUpdatesPowerChart(): void
+    {
+        $this->csrfProtector->method("check")->willReturn(true);
+        $request = new FakeRequest([
+            "url" => "http://example.com/?&chart&admin=plugin_main&action=update_power&chart_power_name=test",
+            "post" => [
+                "chart_do" => "",
+                "json" => '{"type": "line"}',
+            ],
+        ]);
+        $response = $this->sut()($request);
+        $chart = PowerChart::read("test", $this->store);
+        $this->assertSame('{"type": "line"}', $chart->json());
+        $this->assertSame("http://example.com/?&chart&admin=plugin_main&chart_power_name=test", $response->location());
+    }
+
+    public function testsReportsThatNoPowerChartIsSelectedWhenUpdating(): void
+    {
+        $this->csrfProtector->method("check")->willReturn(true);
+        $request = new FakeRequest([
+            "url" => "http://example.com/?&chart&admin=plugin_main&action=update_power",
+            "post" => [
+                "chart_do" => "",
+            ],
+        ]);
+        $response = $this->sut()($request);
+        $this->assertStringContainsString("You did not select a chart!", $response->output());
+    }
+
+    public function testsReportsFailureToLoadPowerChartWhenUpdating(): void
+    {
+        $this->csrfProtector->method("check")->willReturn(true);
+        $request = new FakeRequest([
+            "url" => "http://example.com/?&chart&admin=plugin_main&action=update_power&chart_power_name=does-not-exist",
+            "post" => [
+                "chart_do" => "",
+            ],
+        ]);
+        $response = $this->sut()($request);
+        $this->assertStringContainsString("Cannot load the chart “does-not-exist”!", $response->output());
+    }
+
+    public function testUpdatingPowerChartIsCsrfProtected(): void
+    {
+        $this->csrfProtector->method("check")->willReturn(false);
+        $request = new FakeRequest([
+            "url" => "http://example.com/?&chart&admin=plugin_main&action=update_power&chart_power_name=test",
+            "post" => [
+                "chart_do" => "",
+            ],
+        ]);
+        $response = $this->sut()($request);
+        $this->assertStringContainsString("You are not authorized to conduct this action!", $response->output());
+    }
+
+    public function testReportsFailureToUpdatePowerChart(): void
+    {
+        $this->csrfProtector->method("check")->willReturn(true);
+        vfsStream::setQuota(0);
+        $request = new FakeRequest([
+            "url" => "http://example.com/?&chart&admin=plugin_main&action=update_power&chart_power_name=test",
+            "post" => [
+                "chart_do" => "",
+                "json" => '{"type": "line"}',
             ],
         ]);
         $response = $this->sut()($request);

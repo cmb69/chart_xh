@@ -26,19 +26,24 @@ use Plib\DocumentStore2 as DocumentStore;
 
 final class PowerChart implements Document
 {
-    /** @var mixed */
-    private $jsConf = null;
+    private string $name;
+    private string $json = "";
 
     public static function new(string $key): self
     {
-        return new self();
+        return new self(basename($key, ".json"));
     }
 
     public static function fromString(string $contents, string $key): self
     {
-        $that = new self();
-        $that->jsConf = json_decode($contents, true);
+        $that = new self(basename($key, ".json"));
+        $that->json = $contents;
         return $that;
+    }
+
+    public static function create(string $name, DocumentStore $store): ?self
+    {
+        return $store->create("$name.json", self::class);
     }
 
     public static function read(string $name, DocumentStore $store): ?self
@@ -46,14 +51,33 @@ final class PowerChart implements Document
         return $store->read("$name.json", self::class);
     }
 
-    /** @return mixed */
-    public function jsConf()
+    public static function update(string $name, DocumentStore $store): ?self
     {
-        return $this->jsConf;
+        return $store->update("$name.json", self::class);
+    }
+
+    public function __construct(string $name)
+    {
+        $this->name = $name;
+    }
+
+    public function name(): string
+    {
+        return $this->name;
+    }
+
+    public function json(): string
+    {
+        return $this->json;
+    }
+
+    public function setJson(string $json): void
+    {
+        $this->json = $json;
     }
 
     public function toString(): string
     {
-        return "";
+        return $this->json;
     }
 }

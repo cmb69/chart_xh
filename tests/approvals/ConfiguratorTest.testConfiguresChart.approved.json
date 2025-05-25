@@ -2,8 +2,8 @@
     "data": {
         "datasets": [
             {
-                "backgroundColor": "#ff0000",
-                "borderColor": "#ff0000",
+                "backgroundColor": "#c0003d",
+                "borderColor": "#c0003d",
                 "data": [
                     20.5,
                     25.7,
@@ -12,8 +12,8 @@
                 "label": "SPD"
             },
             {
-                "backgroundColor": "#000000",
-                "borderColor": "#000000",
+                "backgroundColor": "#576164",
+                "borderColor": "#576164",
                 "data": [
                     33,
                     24.2,
@@ -22,8 +22,8 @@
                 "label": "CDU\/CSU"
             },
             {
-                "backgroundColor": "#00ff00",
-                "borderColor": "#00ff00",
+                "backgroundColor": "#008549",
+                "borderColor": "#008549",
                 "data": [
                     8.9,
                     14.7,
@@ -32,8 +32,8 @@
                 "label": "Gr\u00fcne"
             },
             {
-                "backgroundColor": "#ffff00",
-                "borderColor": "#ffff00",
+                "backgroundColor": "#f7bc3d",
+                "borderColor": "#f7bc3d",
                 "data": [
                     10.7,
                     11.4,
@@ -42,8 +42,8 @@
                 "label": "FDP"
             },
             {
-                "backgroundColor": "#0000ff",
-                "borderColor": "#0000ff",
+                "backgroundColor": "#80b6ec",
+                "borderColor": "#80b6ec",
                 "data": [
                     12.6,
                     10.4,
@@ -52,8 +52,8 @@
                 "label": "AfD"
             },
             {
-                "backgroundColor": "#ff00ff",
-                "borderColor": "#ff00ff",
+                "backgroundColor": "#5f316e",
+                "borderColor": "#5f316e",
                 "data": [
                     9.2,
                     4.9,
@@ -62,8 +62,8 @@
                 "label": "Die Linke"
             },
             {
-                "backgroundColor": "#7f7f7f",
-                "borderColor": "#7f7f7f",
+                "backgroundColor": "#bec5c9",
+                "borderColor": "#bec5c9",
                 "data": [
                     5,
                     8.7,

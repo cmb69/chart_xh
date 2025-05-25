@@ -23,6 +23,7 @@ namespace Chart;
 
 use Chart\Dto\ChartDto;
 use Chart\Model\Chart;
+use Chart\Model\PowerChart;
 use Plib\CsrfProtector;
 use Plib\DocumentStore2 as DocumentStore;
 use Plib\Request;
@@ -57,6 +58,10 @@ class ChartAdminCommand
                 return $this->new($request);
             case "update":
                 return $this->edit($request);
+            case "create_power":
+                return $this->newPower($request);
+            case "update_power":
+                return $this->editPower($request);
         }
     }
 
@@ -88,7 +93,8 @@ class ChartAdminCommand
             $errors = [$this->view->message("fail", "error_save", $chart->name())];
             return $this->respondWithEditor($request, true, $dto, [], $errors);
         }
-        return Response::redirect($request->url()->without("action")->absolute());
+        return Response::redirect($request->url()->without("action")
+            ->with("chart_name", $chart->name())->absolute());
     }
 
     private function edit(Request $request): Response
@@ -135,10 +141,13 @@ class ChartAdminCommand
     private function respondWithOverview(Request $request, array $errors = []): Response
     {
         $charts = $this->store->find('/^[a-z0-9\-]+\.xml$/');
+        $powercharts = $this->store->find('/^[a-z0-9\-]+\.json$/');
         return Response::create($this->view->render("admin", [
             "errors" => $errors,
             "charts" => array_map(fn ($chart) => basename($chart, ".xml"), $charts),
+            "powercharts" => array_map(fn ($chart) => basename($chart, ".json"), $powercharts),
             "selected" => $request->get("chart_name") ?? "",
+            "selected_power" => $request->get("chart_power_name") ?? "",
         ]))->withTitle("Chart – " . $this->view->text("menu_main"));
     }
 
@@ -246,5 +255,84 @@ class ChartAdminCommand
     private function script(): string
     {
         return $this->pluginFolder . "admin.js";
+    }
+
+    private function newPower(Request $request): Response
+    {
+        if ($request->post("chart_do") !== null) {
+            return $this->createPower($request);
+        }
+        return $this->respondWithPowerEditor("", "");
+    }
+
+    private function createPower(Request $request): Response
+    {
+        $chart = PowerChart::create($request->post("name") ?? "", $this->store);
+        if ($chart === null) {
+            return Response::create("cannot create power chart");
+        }
+        if (!$this->csrfProtector->check($request->post("chart_token"))) {
+            $this->store->rollback();
+            $errors = [$this->view->message("fail", "error_not_authorized")];
+            return $this->respondWithPowerEditor($chart->name(), $request->post("json") ?? "", $errors);
+        }
+        $chart->setJson($request->post("json") ?? "");
+        if (!$this->store->commit()) {
+            $errors = [$this->view->message("fail", "error_save", $chart->name())];
+            return $this->respondWithPowerEditor($chart->name(), $request->post("json") ?? "", $errors);
+        }
+        return Response::redirect($request->url()->without("action")
+            ->with("chart_power_name", $chart->name())->absolute());
+    }
+
+    private function editPower(Request $request): Response
+    {
+        if ($request->post("chart_do") !== null) {
+            return $this->updatePower($request);
+        }
+        if ($request->get("chart_power_name") === null) {
+            return $this->respondWithOverview($request, [$this->view->message("fail", "error_no_chart")]);
+        }
+        $chart = PowerChart::read($request->get("chart_power_name"), $this->store);
+        if ($chart === null) {
+            $errors = [$this->view->message("fail", "error_load", $request->get("chart_power_name"))];
+            return $this->respondWithOverview($request, $errors);
+        }
+        return $this->respondWithPowerEditor($chart->name(), $chart->json());
+    }
+
+    private function updatePower(Request $request): Response
+    {
+        if ($request->get("chart_power_name") === null) {
+            return $this->respondWithOverview($request, [$this->view->message("fail", "error_no_chart")]);
+        }
+        $chart = PowerChart::update($request->get("chart_power_name"), $this->store);
+        if ($chart === null) {
+            $errors = [$this->view->message("fail", "error_load", $request->get("chart_power_name"))];
+            return $this->respondWithOverview($request, $errors);
+        }
+        if (!$this->csrfProtector->check($request->post("chart_token"))) {
+            $this->store->rollback();
+            $errors = [$this->view->message("fail", "error_not_authorized")];
+            return $this->respondWithPowerEditor($chart->name(), $request->post("json") ?? "", $errors);
+        }
+        $chart->setJson($request->post("json") ?? "");
+        if (!$this->store->commit()) {
+            $errors = [$this->view->message("fail", "error_save", $chart->name())];
+            return $this->respondWithPowerEditor($chart->name(), $request->post("json") ?? "", $errors);
+        }
+        return Response::redirect($request->url()->without("action")->absolute());
+    }
+
+    /** @param list<string> $errors */
+    private function respondWithPowerEditor(string $name, string $json, array $errors = []): Response
+    {
+        return Response::create($this->view->render("power_edit", [
+            "errors" => $errors,
+            "name_disabled" => $name === "" ? "" : "disabled",
+            "name" => $name,
+            "json" => $json,
+            "token" => $this->csrfProtector->token(),
+        ]))->withTitle("Chart – " . $this->view->text("label_edit"));
     }
 }

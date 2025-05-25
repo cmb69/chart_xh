@@ -8,6 +8,13 @@ figure.chart_chart figcaption {
 /* chart administration */
 
 article.chart_admin {}
+article.chart_admin fieldset {
+    padding: 0.75em 0.75em 0 0.75em;
+    margin: 0 0 0.75em 0;
+}
+article.chart_admin legend {
+    padding: 2px;
+}
 article.chart_admin ul {
     list-style: none;
 }
@@ -17,9 +24,7 @@ article.chart_admin .chart_controls {
     justify-content: right;
 }
 
-/* chart edit */
-
-/* map editor */
+/* edit chart */
 
 article.chart_edit {}
 article.chart_edit .chart_help {
@@ -93,6 +98,25 @@ article.chart_edit .chart_edit_dataset {
 }
 article.chart_edit .chart_controls {
     grid-column: 1/3;
+    margin: 1em 0;
+    display: flex;
+    justify-content: right;
+}
+
+/* edit power chart */
+
+article.chart_edit_power {}
+article.chart_edit_power input,
+article.chart_edit_power textarea {
+    display: block;
+    width: 100%;
+}
+article.chart_edit_power .chart_json {
+    height: 40em;
+    font-family: monospace !important;
+    line-height: 1.5em !important;
+}
+article.chart_edit_power .chart_controls {
     margin: 1em 0;
     display: flex;
     justify-content: right;

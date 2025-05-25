@@ -4,17 +4,35 @@
   <form method="get">
     <input type="hidden" name="selected" value="chart">
     <input type="hidden" name="admin" value="plugin_main">
-    <ul>
-      <li>
-        <label>
-          <input type="radio" name="chart_name" value="test" >
-          <span>test</span>
-        </label>
-      </li>
-    </ul>
-    <p class="chart_controls">
-      <button name="action" value="update">Edit</button>
-      <button name="action" value="create">New</button>
-    </p>
+    <fieldset>
+      <legend>Charts</legend>
+      <ul>
+        <li>
+          <label>
+            <input type="radio" name="chart_name" value="test" >
+            <span>test</span>
+          </label>
+        </li>
+      </ul>
+      <p class="chart_controls">
+        <button name="action" value="update">Edit</button>
+        <button name="action" value="create">New</button>
+      </p>
+    </fieldset>
+    <fieldset>
+      <legend>Power Charts</legend>
+      <ul>
+        <li>
+          <label>
+            <input type="radio" name="chart_power_name" value="test" >
+            <span>test</span>
+          </label>
+        </li>
+      </ul>
+      <p class="chart_controls">
+        <button name="action" value="update_power">Edit</button>
+        <button name="action" value="create_power">New</button>
+      </p>
+    </fieldset>
   </form>
 </article>

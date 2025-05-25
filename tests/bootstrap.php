@@ -18,6 +18,7 @@ require_once "../plib/classes/FakeSystemChecker.php";
 require_once "./classes/dto/ChartDto.php";
 require_once "./classes/model/Chart.php";
 require_once "./classes/model/Dataset.php";
+require_once "./classes/model/PowerChart.php";
 require_once "./classes/Configurator.php";
 require_once "./classes/Dic.php";
 require_once "./classes/ChartAdminCommand.php";
