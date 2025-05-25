@@ -15,6 +15,7 @@ require_once "../plib/classes/View.php";
 require_once "../plib/classes/FakeRequest.php";
 require_once "../plib/classes/FakeSystemChecker.php";
 
+require_once "./classes/dto/ChartDto.php";
 require_once "./classes/model/Chart.php";
 require_once "./classes/model/Dataset.php";
 require_once "./classes/Configurator.php";

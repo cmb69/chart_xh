@@ -1,6 +1,6 @@
 <?php
 
-use Chart\Model\Chart;
+use Chart\Dto\ChartDto;
 use Plib\View;
 
 if (!defined("CMSIMPLE_XH_VERSION")) {http_response_code(403); exit;}
@@ -8,7 +8,7 @@ if (!defined("CMSIMPLE_XH_VERSION")) {http_response_code(403); exit;}
 /**
  * @var View $this
  * @var list<string> $errors
- * @var object{name:string,caption:string,type:string,transposed:bool,aspect_ratio:string,labels:string,datasets:string} $chart
+ * @var ChartDto $chart
  * @var list<string> $chart_types
  * @var list<object{label:string,color:string,values:string}> $datasets
  * @var string $name_disabled

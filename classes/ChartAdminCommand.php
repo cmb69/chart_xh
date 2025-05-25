@@ -21,6 +21,7 @@
 
 namespace Chart;
 
+use Chart\Dto\ChartDto;
 use Chart\Model\Chart;
 use Plib\CsrfProtector;
 use Plib\DocumentStore2 as DocumentStore;
@@ -69,15 +70,7 @@ class ChartAdminCommand
         if ($request->post("chart_do") !== null) {
             return $this->create($request);
         }
-        $dto = (object) [
-            "name" => "",
-            "caption" => "",
-            "type" => Chart::TYPES[0],
-            "transposed" => false,
-            "aspect_ratio" => "3/2",
-            "labels" => "",
-            "datasets" => "[]",
-        ];
+        $dto = new ChartDto("", "", Chart::TYPES[0], false, "3/2", "", "[]");
         return $this->respondWithEditor($request, true, $dto, []);
     }
 
@@ -150,14 +143,13 @@ class ChartAdminCommand
     }
 
     /**
-     * @param object{name:string,caption:string,type:string,transposed:bool,aspect_ratio:string,labels:string,datasets:string} $dto
      * @param iterable<object{label:string,color:string,values:string}> $datasets
      * @param list<string> $errors
      */
     private function respondWithEditor(
         Request $request,
         bool $new,
-        $dto,
+        ChartDto $dto,
         iterable $datasets,
         array $errors = []
     ): Response {
@@ -172,8 +164,7 @@ class ChartAdminCommand
         ]))->withTitle("Chart – " . $this->view->text("label_edit"));
     }
 
-    /** @return object{name:string,caption:string,type:string,transposed:bool,aspect_ratio:string,labels:string,datasets:string} */
-    private function chartToDto(Chart $chart)
+    private function chartToDto(Chart $chart): ChartDto
     {
         $datasets = [];
         foreach ($chart->datasets() as $dataset) {
@@ -183,15 +174,15 @@ class ChartAdminCommand
                 "values" => $dataset->values(),
             ];
         }
-        return (object) [
-            "name" => $chart->name(),
-            "caption" => $chart->caption(),
-            "type" => $chart->type(),
-            "transposed" => $chart->transposed(),
-            "aspect_ratio" => $chart->aspectRatio(),
-            "labels" => implode(",", $chart->labels()),
-            "datasets" => (string) json_encode($datasets),
-        ];
+        return new ChartDto(
+            $chart->name(),
+            $chart->caption(),
+            $chart->type(),
+            $chart->transposed(),
+            $chart->aspectRatio(),
+            implode(",", $chart->labels()),
+            (string) json_encode($datasets)
+        );
     }
 
     /** @return iterable<object{label:string,color:string,values:string}> */
@@ -206,22 +197,20 @@ class ChartAdminCommand
         }
     }
 
-    /** @return object{name:string,caption:string,type:string,transposed:bool,aspect_ratio:string,labels:string,datasets:string} */
-    private function requestToDto(Request $request)
+    private function requestToDto(Request $request): ChartDto
     {
-        return (object) [
-            "name" => $request->post("name") ?? $request->get("maps_map") ?? "",
-            "caption" => $request->post("caption") ?? "",
-            "type" => $request->post("type") ?? Chart::TYPES[0],
-            "transposed" => $request->post("transposed") !== null,
-            "aspect_ratio" => $request->post("aspect_ratio") ?? "",
-            "labels" => $request->post("labels") ?? "",
-            "datasets" => $request->post("datasets") ?? "",
-        ];
+        return new ChartDto(
+            $request->post("name") ?? $request->get("maps_map") ?? "",
+            $request->post("caption") ?? "",
+            $request->post("type") ?? Chart::TYPES[0],
+            $request->post("transposed") !== null,
+            $request->post("aspect_ratio") ?? "",
+            $request->post("labels") ?? "",
+            $request->post("datasets") ?? ""
+        );
     }
 
-    /** @param object{name:string,caption:string,type:string,transposed:bool,aspect_ratio:string,labels:string,datasets:string} $dto */
-    private function updateChartFromDto(Chart $chart, $dto): void
+    private function updateChartFromDto(Chart $chart, ChartDto $dto): void
     {
         $chart->setCaption($dto->caption);
         $chart->setType($dto->type);
