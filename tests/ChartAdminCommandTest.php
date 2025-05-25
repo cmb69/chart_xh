@@ -75,6 +75,21 @@ class ChartAdminCommandTest extends TestCase
         $this->assertSame("http://example.com/?&chart&admin=plugin_main&chart_name=new", $response->location());
     }
 
+    public function testReportsFailureToCreateNewChart(): void
+    {
+        chmod(vfsStream::url("root"), 0000);
+        $this->csrfProtector->method("check")->willReturn(true);
+        $request = new FakeRequest([
+            "url" => "http://example.com/?&chart&admin=plugin_main&action=create",
+            "post" => [
+                "chart_do" => "",
+                "name" => "new",
+            ],
+        ]);
+        $response = $this->sut()($request);
+        $this->assertStringContainsString("Cannot create the chart “new”!", $response->output());
+    }
+
     public function testCreatingIsCsrfProtected(): void
     {
         $this->csrfProtector->method("check")->willReturn(false);
@@ -296,6 +311,20 @@ class ChartAdminCommandTest extends TestCase
         $this->assertStringContainsString("You are not authorized to conduct this action!", $response->output());
     }
 
+    public function testsReportsFailureToCreateChartWhenExporting(): void
+    {
+        chmod(vfsStream::url("root/test.json"), 0000);
+        $this->csrfProtector->method("check")->willReturn(true);
+        $request = new FakeRequest([
+            "url" => "http://example.com/?&chart&admin=plugin_main&action=export&chart_name=test",
+            "post" => [
+                "chart_do" => "",
+            ],
+        ]);
+        $response = $this->sut()($request);
+        $this->assertStringContainsString("Cannot create the chart “test”!", $response->output());
+    }
+
     public function testReportsFailureToExportChart(): void
     {
         $this->csrfProtector->method("check")->willReturn(true);
@@ -331,6 +360,22 @@ class ChartAdminCommandTest extends TestCase
         $response = $this->sut()($request);
         $this->assertFileExists(vfsStream::url("root/new.json"));
         $this->assertSame("http://example.com/?&chart&admin=plugin_main&chart_power_name=new", $response->location());
+    }
+
+    public function testReportsFailureToCreatNewPowerChart(): void
+    {
+        chmod(vfsStream::url("root"), 0000);
+        $this->csrfProtector->method("check")->willReturn(true);
+        $request = new FakeRequest([
+            "url" => "http://example.com/?&chart&admin=plugin_main&action=create_power",
+            "post" => [
+                "chart_do" => "",
+                "name" => "new",
+            ],
+        ]);
+        $response = $this->sut()($request);
+        $this->assertFileDoesNotExist(vfsStream::url("root/new.json"));
+        $this->assertStringContainsString("Cannot create the chart “new”!", $response->output());
     }
 
     public function testCreatingPowerChartIsCsrfProtected(): void

@@ -44,6 +44,7 @@ $plugin_tx['chart']['message_export_overwrite']="Dies wird einen bestehenden Pow
 
 $plugin_tx['chart']['error_not_authorized']="Sie sind nicht befugt diese Aktion auszuführen!";
 $plugin_tx['chart']['error_no_chart']="Sie haben keine Chart ausgewählt!";
+$plugin_tx['chart']['error_create']="Das Diagramm „%s“ kann nicht erstellt werden!";
 $plugin_tx['chart']['error_load']="Das Diagramm „%s“ kann nicht geladen werden!";
 $plugin_tx['chart']['error_save']="Das Diagramm „%s“ kann nicht gespeichert werden!";
 

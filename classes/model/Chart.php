@@ -89,11 +89,9 @@ final class Chart implements Document
         return $that;
     }
 
-    public static function create(string $name, DocumentStore $store): self
+    public static function create(string $name, DocumentStore $store): ?self
     {
-        $that = $store->create("$name.xml", self::class);
-        assert($that instanceof self);
-        return $that;
+        return $store->create("$name.xml", self::class);
     }
 
     public static function read(string $name, DocumentStore $store): ?self

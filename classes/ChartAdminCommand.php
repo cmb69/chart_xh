@@ -86,8 +86,12 @@ class ChartAdminCommand
 
     private function create(Request $request): Response
     {
-        $chart = Chart::create($request->post("name") ?? "", $this->store);
         $dto = $this->requestToDto($request);
+        $chart = Chart::create($request->post("name") ?? "", $this->store);
+        if ($chart === null) {
+            $errors = [$this->view->message("fail", "error_create", $dto->name)];
+            return $this->respondWithEditor($request, true, $dto, [], $errors);
+        }
         if (!$this->csrfProtector->check($request->post("chart_token"))) {
             $this->store->rollback();
             $errors = [$this->view->message("fail", "error_not_authorized")];
@@ -175,7 +179,8 @@ class ChartAdminCommand
         $powerchart = PowerChart::create($chart->name(), $this->store)
             ?? PowerChart::update($chart->name(), $this->store);
         if ($powerchart === null) {
-            return Response::create("cannot create power chart");
+            $errors = [$this->view->message("fail", "error_create", $chart->name())];
+            return $this->respondWithExportConfirmation($chart->name(), $errors);
         }
         $conf = $this->configurator->configure($chart);
         $powerchart->setJson((string) json_encode(
@@ -335,7 +340,8 @@ class ChartAdminCommand
     {
         $chart = PowerChart::create($request->post("name") ?? "", $this->store);
         if ($chart === null) {
-            return Response::create("cannot create power chart");
+            $errors = [$this->view->message("fail", "error_create", $request->post("name") ?? "")];
+            return $this->respondWithPowerEditor($request->post("name") ?? "", $request->post("json") ?? "", $errors);
         }
         if (!$this->csrfProtector->check($request->post("chart_token"))) {
             $this->store->rollback();

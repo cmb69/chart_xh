@@ -44,6 +44,7 @@ $plugin_tx['chart']['message_export_overwrite']="This will overwrite an existing
 
 $plugin_tx['chart']['error_not_authorized']="You are not authorized to conduct this action!";
 $plugin_tx['chart']['error_no_chart']="You did not select a chart!";
+$plugin_tx['chart']['error_create']="Cannot create the chart “%s”!";
 $plugin_tx['chart']['error_load']="Cannot load the chart “%s”!";
 $plugin_tx['chart']['error_save']="Cannot save the chart “%s”!";
 
