@@ -327,6 +327,9 @@ class ChartAdminCommand
     /** @param list<string> $errors */
     private function respondWithPowerEditor(string $name, string $json, array $errors = []): Response
     {
+        if (function_exists("init_codeeditor") && defined("CODEEDITOR_VERSION")) {
+            init_codeeditor(["chart_json"], '{"mode": {"name": "javascript", "json": true}, "theme": "%THEME%"}');
+        }
         return Response::create($this->view->render("power_edit", [
             "errors" => $errors,
             "name_disabled" => $name === "" ? "" : "disabled",
