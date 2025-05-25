@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<element name="chart" xmlns="http://relaxng.org/ns/structure/1.0">
-  <attribute name="caption"/>
+<element name="chart" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <attribute name="caption">
+    <data type="string"/>
+  </attribute>
   <attribute name="type">
     <choice>
       <value>line</value>
@@ -13,20 +15,32 @@
       <value>polar-area</value>
     </choice>
   </attribute>
-  <attribute name="transposed"/>
-  <attribute name="aspect-ratio"/>
+  <attribute name="transposed">
+    <data type="boolean"/>
+  </attribute>
+  <attribute name="aspect-ratio">
+    <data type="string">
+      <param name="pattern">\d+/\d+</param>
+    </data>
+  </attribute>
   <zeroOrMore>
     <element name="label">
-      <text/>
+      <data type="string"/>
     </element>
   </zeroOrMore>
   <zeroOrMore>
     <element name="dataset">
-      <attribute name="label"/>
-      <attribute name="color"/>
+      <attribute name="label">
+        <data type="string"/>
+      </attribute>
+      <attribute name="color">
+        <data type="string">
+          <param name="pattern">#[0-9a-f]{6}</param>
+        </data>
+      </attribute>
       <zeroOrMore>
         <element name="value">
-          <text/>
+          <data type="double"/>
         </element>
       </zeroOrMore>
     </element>

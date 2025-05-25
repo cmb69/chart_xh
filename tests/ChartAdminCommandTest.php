@@ -68,6 +68,7 @@ class ChartAdminCommandTest extends TestCase
             "post" => [
                 "chart_do" => "",
                 "name" => "new",
+                "aspect_ratio" => "1/1",
             ],
         ]);
         $response = $this->sut()($request);
@@ -113,6 +114,7 @@ class ChartAdminCommandTest extends TestCase
             "post" => [
                 "chart_do" => "",
                 "name" => "new",
+                "aspect_ratio" => "1/1",
             ],
         ]);
         $response = $this->sut()($request);
@@ -155,6 +157,7 @@ class ChartAdminCommandTest extends TestCase
             "post" => [
                 "chart_do" => "",
                 "caption" => "new chart caption",
+                "aspect_ratio" => "1/1",
                 "labels" => "one,two,three",
                 "datasets" => '[{"label":"one","color":"#ff0000","values":[1,2,3]}]'
             ],
@@ -220,6 +223,7 @@ class ChartAdminCommandTest extends TestCase
             "post" => [
                 "chart_do" => "",
                 "caption" => "a new caption",
+                "aspect_ratio" => "1/1",
             ],
         ]);
         $response = $this->sut()($request);

@@ -73,7 +73,7 @@ final class Chart implements Document
             basename($key, ".xml"),
             $chart->getAttribute("caption"),
             $chart->getAttribute("type"),
-            (bool) $chart->getAttribute("transposed"),
+            in_array($chart->getAttribute("transposed"), ["1", "true"]),
             $chart->getAttribute("aspect-ratio")
         );
         foreach ($chart->childNodes as $childNode) {
@@ -196,7 +196,7 @@ final class Chart implements Document
         $chart = $doc->createElement('chart');
         $chart->setAttribute("caption", $this->caption);
         $chart->setAttribute("type", $this->type);
-        $chart->setAttribute("transposed", (string) $this->transposed);
+        $chart->setAttribute("transposed", (string) (int) $this->transposed);
         $chart->setAttribute("aspect-ratio", $this->aspectRatio);
         $doc->appendChild($chart);
         foreach ($this->labels as $label) {
