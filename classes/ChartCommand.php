@@ -64,7 +64,7 @@ class ChartCommand
         }
         return Response::create($this->view->render("chart", [
             "caption" => $caption ?? $chart->caption(),
-            "chart_js" => $this->conf["chartjs_url"] ?: $this->pluginFolder . "chartjs/chart.umd.js",
+            "chart_js" => $this->conf["chartjs_url"] ?: $this->pluginFolder . "chartjs/chart.umd.min.js",
             "script" => $request->url()->path($this->script())->with("v", Dic::VERSION)->relative(),
             "js_conf" => $caption !== null
                 ? json_decode($chart->json(), true)
