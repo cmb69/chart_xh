@@ -20,7 +20,6 @@
 function init(element) {
     const canvas = element.querySelector("canvas");
     const config = JSON.parse(element.dataset.chartConfig);
-    console.log(config);
     new Chart(canvas.getContext("2d"), config);
 }
 
