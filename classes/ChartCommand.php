@@ -23,7 +23,7 @@ namespace Chart;
 
 use Chart\Model\Chart;
 use Chart\Model\PowerChart;
-use Plib\DocumentStore2;
+use Plib\DocumentStore2 as DocumentStore;
 use Plib\Request;
 use Plib\Response;
 use Plib\View;
@@ -31,11 +31,11 @@ use Plib\View;
 class ChartCommand
 {
     private string $pluginFolder;
-    private DocumentStore2 $store;
+    private DocumentStore $store;
     private Configurator $configurator;
     private View $view;
 
-    public function __construct(string $pluginFolder, DocumentStore2 $store, Configurator $configurator, View $view)
+    public function __construct(string $pluginFolder, DocumentStore $store, Configurator $configurator, View $view)
     {
         $this->pluginFolder = $pluginFolder;
         $this->store = $store;

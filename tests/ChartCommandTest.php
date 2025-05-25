@@ -7,20 +7,20 @@ use Chart\Model\Chart;
 use Chart\Model\PowerChart;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\TestCase;
-use Plib\DocumentStore2;
+use Plib\DocumentStore2 as DocumentStore;
 use Plib\FakeRequest;
 use Plib\View;
 
 class ChartCommandTest extends TestCase
 {
-    private DocumentStore2 $store;
+    private DocumentStore $store;
     private Configurator $configurator;
     private View $view;
 
     public function setUp(): void
     {
         vfsStream::setup("root");
-        $this->store = new DocumentStore2(vfsStream::url("root/"));
+        $this->store = new DocumentStore(vfsStream::url("root/"));
         $chart = Chart::create("test", $this->store);
         $dataset = $chart->addDataset("one", "#ff0000");
         $dataset->addValue(1);
