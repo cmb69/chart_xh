@@ -35,17 +35,20 @@ class ChartAdminCommand
     private string $pluginFolder;
     private DocumentStore $store;
     private CsrfProtector $csrfProtector;
+    private Configurator $configurator;
     private View $view;
 
     public function __construct(
         string $pluginFolder,
         DocumentStore $store,
         CsrfProtector $csrfProtector,
+        Configurator $configurator,
         View $view
     ) {
         $this->pluginFolder = $pluginFolder;
         $this->store = $store;
         $this->csrfProtector = $csrfProtector;
+        $this->configurator = $configurator;
         $this->view = $view;
     }
 
@@ -58,6 +61,8 @@ class ChartAdminCommand
                 return $this->new($request);
             case "update":
                 return $this->edit($request);
+            case "export":
+                return $this->export($request);
             case "create_power":
                 return $this->newPower($request);
             case "update_power":
@@ -135,6 +140,54 @@ class ChartAdminCommand
             return $this->respondWithEditor($request, false, $dto, [], $errors);
         }
         return Response::redirect($request->url()->without("action")->absolute());
+    }
+
+    private function export(Request $request): Response
+    {
+        if ($request->post("chart_do") !== null) {
+            return $this->doExport($request);
+        }
+        if ($request->get("chart_name") === null) {
+            return $this->respondWithOverview($request, [$this->view->message("fail", "error_no_chart")]);
+        }
+        $chart = Chart::read($request->get("chart_name"), $this->store);
+        if ($chart === null) {
+            $errors = [$this->view->message("fail", "error_load", $request->get("chart_name"))];
+            return $this->respondWithOverview($request, $errors);
+        }
+        return $this->respondWithExportConfirmation($chart->name());
+    }
+
+    private function doExport(Request $request): Response
+    {
+        if ($request->get("chart_name") === null) {
+            return $this->respondWithOverview($request, [$this->view->message("fail", "error_no_chart")]);
+        }
+        $chart = Chart::read($request->get("chart_name"), $this->store);
+        if ($chart === null) {
+            $errors = [$this->view->message("fail", "error_load", $request->get("chart_name"))];
+            return $this->respondWithOverview($request, $errors);
+        }
+        if (!$this->csrfProtector->check($request->post("chart_token"))) {
+            $errors = [$this->view->message("fail", "error_not_authorized")];
+            return $this->respondWithExportConfirmation($chart->name(), $errors);
+        }
+        $powerchart = PowerChart::create($chart->name(), $this->store)
+            ?? PowerChart::update($chart->name(), $this->store);
+        if ($powerchart === null) {
+            return Response::create("cannot create power chart");
+        }
+        $conf = $this->configurator->configure($chart);
+        $powerchart->setJson((string) json_encode(
+            $conf,
+            JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
+        ));
+        if (!$this->store->commit()) {
+            $errors = [$this->view->message("fail", "error_save", $powerchart->name())];
+            return $this->respondWithExportConfirmation($powerchart->name(), $errors);
+        }
+        return Response::redirect($request->url()->with("action", "update_power")
+            ->with("chart_power_name", $powerchart->name())->absolute());
     }
 
     /** @param list<string> $errors */
@@ -255,6 +308,16 @@ class ChartAdminCommand
     private function script(): string
     {
         return $this->pluginFolder . "admin.js";
+    }
+
+    /** @param list<string> $errors */
+    private function respondWithExportConfirmation(string $name, array $errors = []): Response
+    {
+        return Response::create($this->view->render("export", [
+            "errors" => $errors,
+            "name" => $name,
+            "token" => $this->csrfProtector->token(),
+        ]))->withTitle("Chart – " . $this->view->text("label_export"));
     }
 
     private function newPower(Request $request): Response

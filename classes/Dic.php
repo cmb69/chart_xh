@@ -59,6 +59,7 @@ class Dic
             $pth["folder"]["plugins"] . "chart/",
             self::documentStore(),
             new CsrfProtector(),
+            new Configurator(),
             self::view()
         );
     }

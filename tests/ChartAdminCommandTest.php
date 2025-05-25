@@ -18,6 +18,7 @@ class ChartAdminCommandTest extends TestCase
     private DocumentStore $store;
     /** @var CsrfProtector&Stub */
     private $csrfProtector;
+    private Configurator $configurator;
     private View $view;
 
     public function setUp(): void
@@ -34,12 +35,13 @@ class ChartAdminCommandTest extends TestCase
         $this->store->commit();
         $this->csrfProtector = $this->createStub(CsrfProtector::class);
         $this->csrfProtector->method("token")->willReturn("0123456789ABCDEF");
+        $this->configurator = new Configurator();
         $this->view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["chart"]);
     }
 
     private function sut(): ChartAdminCommand
     {
-        return new ChartAdminCommand("./", $this->store, $this->csrfProtector, $this->view);
+        return new ChartAdminCommand("./", $this->store, $this->csrfProtector, $this->configurator, $this->view);
     }
 
     public function testRendersOverview(): void
@@ -203,6 +205,105 @@ class ChartAdminCommandTest extends TestCase
             "post" => [
                 "chart_do" => "",
                 "caption" => "a new caption",
+            ],
+        ]);
+        $response = $this->sut()($request);
+        $this->assertStringContainsString("Cannot save the chart “test”!", $response->output());
+    }
+
+    public function testRendersExportConfirmation(): void
+    {
+        $request = new FakeRequest([
+            "url" => "http://example.com/?&chart&admin=plugin_main&action=export&chart_name=test",
+        ]);
+        $response = $this->sut()($request);
+        $this->assertSame("Chart – Export", $response->title());
+        Approvals::verifyHtml($response->output());
+    }
+
+    public function testsReportsThatNoChartIsSelectedForExport(): void
+    {
+        $request = new FakeRequest([
+            "url" => "http://example.com/?&chart&admin=plugin_main&action=export",
+        ]);
+        $response = $this->sut()($request);
+        $this->assertStringContainsString("You did not select a chart!", $response->output());
+    }
+
+    public function testReportsFailureToLoadChartForExport(): void
+    {
+        $request = new FakeRequest([
+            "url" => "http://example.com/?&chart&admin=plugin_main&action=export&chart_name=does-not-exist",
+        ]);
+        $response = $this->sut()($request);
+        $this->assertStringContainsString("Cannot load the chart “does-not-exist”!", $response->output());
+    }
+
+    public function testExportsChart(): void
+    {
+        $this->csrfProtector->method("check")->willReturn(true);
+        $request = new FakeRequest([
+            "url" => "http://example.com/?&chart&admin=plugin_main&action=export&chart_name=test",
+            "post" => [
+                "chart_do" => "",
+            ],
+        ]);
+        $response = $this->sut()($request);
+        $chart = PowerChart::read("test", $this->store);
+        $this->assertStringContainsString('"type": "line"', $chart->json());
+        $this->assertSame(
+            "http://example.com/?&chart&admin=plugin_main&action=update_power&chart_name=test&chart_power_name=test",
+            $response->location()
+        );
+    }
+
+    public function testsReportsThatNoChartIsSelectedWhenExporting(): void
+    {
+        $this->csrfProtector->method("check")->willReturn(true);
+        $request = new FakeRequest([
+            "url" => "http://example.com/?&chart&admin=plugin_main&action=export",
+            "post" => [
+                "chart_do" => "",
+            ],
+        ]);
+        $response = $this->sut()($request);
+        $this->assertStringContainsString("You did not select a chart!", $response->output());
+    }
+
+    public function testsReportsFailureToLoadChartWhenExporting(): void
+    {
+        $this->csrfProtector->method("check")->willReturn(true);
+        $request = new FakeRequest([
+            "url" => "http://example.com/?&chart&admin=plugin_main&action=export&chart_name=does-not-exist",
+            "post" => [
+                "chart_do" => "",
+            ],
+        ]);
+        $response = $this->sut()($request);
+        $this->assertStringContainsString("Cannot load the chart “does-not-exist”!", $response->output());
+    }
+
+    public function testExportingIsCsrfProtected(): void
+    {
+        $this->csrfProtector->method("check")->willReturn(false);
+        $request = new FakeRequest([
+            "url" => "http://example.com/?&chart&admin=plugin_main&action=export&chart_name=test",
+            "post" => [
+                "chart_do" => "",
+            ],
+        ]);
+        $response = $this->sut()($request);
+        $this->assertStringContainsString("You are not authorized to conduct this action!", $response->output());
+    }
+
+    public function testReportsFailureToExportChart(): void
+    {
+        $this->csrfProtector->method("check")->willReturn(true);
+        vfsStream::setQuota(0);
+        $request = new FakeRequest([
+            "url" => "http://example.com/?&chart&admin=plugin_main&action=export&chart_name=test",
+            "post" => [
+                "chart_do" => "",
             ],
         ]);
         $response = $this->sut()($request);

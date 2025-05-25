@@ -12,6 +12,7 @@ $plugin_tx['chart']['label_datasets']="Datensätze";
 $plugin_tx['chart']['label_delete_dataset']="Datensatz löschen";
 $plugin_tx['chart']['label_edit']="Bearbeiten";
 $plugin_tx['chart']['label_edit_values']="Werte bearbeiten";
+$plugin_tx['chart']['label_export']="Exportieren";
 $plugin_tx['chart']['label_json']="JSON";
 $plugin_tx['chart']['label_label']="Beschriftung";
 $plugin_tx['chart']['label_labels']="Beschriftungen";
@@ -37,6 +38,9 @@ $plugin_tx['chart']['help_caption']="(HTML)";
 $plugin_tx['chart']['help_labels']="(durch Komma getrennte Zeichenfolgen)";
 $plugin_tx['chart']['help_name']="(nur a-z, 0-9 und Bindestriche)";
 $plugin_tx['chart']['help_values']="(durch Komma getrennte Zahlen; Dezimaltrenner ist Punkt)";
+
+$plugin_tx['chart']['message_confirm_export']="Wollen Sie wirklich die Konfiguration des Diagramms „%s“ als Power-Chart exportieren?";
+$plugin_tx['chart']['message_export_overwrite']="Dies wird einen bestehenden Power-Chart „%s“ überschreiben!";
 
 $plugin_tx['chart']['error_not_authorized']="Sie sind nicht befugt diese Aktion auszuführen!";
 $plugin_tx['chart']['error_no_chart']="Sie haben keine Chart ausgewählt!";

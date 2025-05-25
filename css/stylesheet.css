@@ -103,6 +103,15 @@ article.chart_edit .chart_controls {
     justify-content: right;
 }
 
+/* export chart */
+
+article.chart_export {}
+article.chart_export .chart_controls {
+    margin: 1em 0;
+    display: flex;
+    justify-content: right;
+}
+
 /* edit power chart */
 
 article.chart_edit_power {}
