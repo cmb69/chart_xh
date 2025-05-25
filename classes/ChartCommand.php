@@ -24,6 +24,7 @@ namespace Chart;
 use Chart\Model\Chart;
 use Chart\Model\PowerChart;
 use Plib\DocumentStore2;
+use Plib\Request;
 use Plib\Response;
 use Plib\View;
 
@@ -42,7 +43,7 @@ class ChartCommand
         $this->view = $view;
     }
 
-    public function __invoke(string $name, ?string $caption): Response
+    public function __invoke(string $name, ?string $caption, Request $request): Response
     {
         if ($caption !== null) {
             $chart = PowerChart::read($name, $this->store);
@@ -55,10 +56,18 @@ class ChartCommand
         return Response::create($this->view->render("chart", [
             "caption" => $caption ?? $chart->caption(),
             "chart_js" => $this->pluginFolder . "chartjs/chart.umd.js",
-            "script" => $this->pluginFolder . "chart.js",
+            "script" => $request->url()->path($this->script())->with("v", Dic::VERSION)->relative(),
             "js_conf" => $caption !== null
                 ? json_decode($chart->json(), true)
                 : $this->configurator->configure($chart),
         ]));
+    }
+
+    private function script(): string
+    {
+        if (is_file($this->pluginFolder . "chart.min.js")) {
+            return $this->pluginFolder . "chart.min.js";
+        }
+        return $this->pluginFolder . "chart.js";
     }
 }

@@ -4,3 +4,4 @@
 /.phpunit.result.cache
 /coverage
 /TODO.md
+/*.min.js

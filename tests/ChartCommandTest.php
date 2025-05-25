@@ -8,6 +8,7 @@ use Chart\Model\PowerChart;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\TestCase;
 use Plib\DocumentStore2;
+use Plib\FakeRequest;
 use Plib\View;
 
 class ChartCommandTest extends TestCase
@@ -39,19 +40,22 @@ class ChartCommandTest extends TestCase
 
     public function testRendersChart(): void
     {
-        $response = $this->sut()("test", null);
+        $request = new FakeRequest();
+        $response = $this->sut()("test", null, $request);
         Approvals::verifyHtml($response->output());
     }
 
     public function testReportsUnreadableChart(): void
     {
-        $response = $this->sut()("wrong", null);
+        $request = new FakeRequest();
+        $response = $this->sut()("wrong", null, $request);
         $this->assertStringContainsString("Cannot load the chart “wrong”!", $response->output());
     }
 
     public function testRendersPowerChart(): void
     {
-        $response = $this->sut()("test", "A Power Chart");
+        $request = new FakeRequest();
+        $response = $this->sut()("test", "A Power Chart", $request);
         Approvals::verifyHtml($response->output());
     }
 }

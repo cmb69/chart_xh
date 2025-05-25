@@ -20,13 +20,14 @@
  */
 
 use Chart\Dic;
+use Plib\Request;
 
 function chart(string $name): string
 {
-    return Dic::chartCommand()($name, null)();
+    return Dic::chartCommand()($name, null, Request::current())();
 }
 
 function chart_advanced(string $name, string $caption): string
 {
-    return Dic::chartCommand()($name, $caption)();
+    return Dic::chartCommand()($name, $caption, Request::current())();
 }
