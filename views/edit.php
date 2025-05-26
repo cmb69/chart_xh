@@ -55,7 +55,7 @@ if (!defined("CMSIMPLE_XH_VERSION")) {http_response_code(403); exit;}
     <p>
       <label>
         <span><?=$this->text("label_aspect_ratio")?></span>
-        <span class="maps_help"><?=$this->text("help_aspect_ratio")?></span>
+        <span class="chart_help"><?=$this->text("help_aspect_ratio")?></span>
         <input name="aspect_ratio" value="<?=$this->esc($chart->aspect_ratio)?>" required pattern="\d+/\d+">
     <p class="chart_labels">
       <label>

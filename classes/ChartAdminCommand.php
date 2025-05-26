@@ -306,7 +306,7 @@ class ChartAdminCommand
     private function requestToDto(Request $request): ChartDto
     {
         return new ChartDto(
-            $request->post("name") ?? $request->get("maps_map") ?? "",
+            $request->post("name") ?? $request->get("chart_name") ?? "",
             $request->post("caption") ?? "",
             $request->post("type") ?? Chart::TYPES[0],
             $request->post("transposed") !== null,
