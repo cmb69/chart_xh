@@ -94,13 +94,13 @@
     <delete dir="export"/>
     <copy file="dist/config/config.php" tofile="dist/config/defaultconfig.php"/>
     <copy file="dist/languages/en.php" tofile="dist/languages/default.php"/>
-    <zip destfile="Chart_XH-1.0.zip" basedir="dist" prefix="chart/"/>
+    <zip destfile="Chart_XH-1.1-dev.zip" basedir="dist" prefix="chart/"/>
     <delete dir="dist"/>
   </target>
 
   <target name="build-patch" description="builds a distributable update package">
     <fail unless="patchee" message="patchee is not defined!"/>
-    <unzip file="Chart_XH-1.0.zip" todir="current"/>
+    <unzip file="Chart_XH-1.1-dev.zip" todir="current"/>
     <unzip file="${patchee}" todir="patchee"/>
     <copy todir="dist">
       <fileset dir="current">
@@ -116,10 +116,10 @@
     <if>
       <available file="dist/chart/css/stylesheet.css"/>
       <then>
-        <move file="dist/chart/css/stylesheet.css" tofile="dist/chart/css/stylesheet-1.0.css"/>
+        <move file="dist/chart/css/stylesheet.css" tofile="dist/chart/css/stylesheet-1.1-dev.css"/>
       </then>
     </if>
-    <zip destfile="Chart_XH-1.0-update-from-1.x.zip" basedir="dist" includeemptydirs="false"/>
+    <zip destfile="Chart_XH-1.1-dev-update-from-1.x.zip" basedir="dist" includeemptydirs="false"/>
     <delete dir="patchee" quiet="true"/>
     <delete dir="current" quiet="true"/>
     <delete dir="dist" quiet="true"/>
