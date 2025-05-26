@@ -24,6 +24,8 @@ namespace Chart;
 use Chart\Dto\ChartDto;
 use Chart\Model\Chart;
 use Chart\Model\PowerChart;
+use DOMDocument;
+use LibXMLError;
 use Plib\CsrfProtector;
 use Plib\DocumentStore2 as DocumentStore;
 use Plib\Request;
@@ -57,6 +59,8 @@ class ChartAdminCommand
         switch ($request->get("action")) {
             default:
                 return $this->overview($request);
+            case "check":
+                return $this->check($request);
             case "create":
                 return $this->new($request);
             case "update":
@@ -73,6 +77,41 @@ class ChartAdminCommand
     private function overview(Request $request): Response
     {
         return $this->respondWithOverview($request);
+    }
+
+    private function check(Request $request): Response
+    {
+        if ($request->get("chart_name") === null) {
+            return $this->respondWithOverview($request, [$this->view->message("fail", "error_no_chart")]);
+        }
+        $basename = $request->get("chart_name");
+        $contents = @file_get_contents($this->store->folder() . $basename . ".xml");
+        if ($contents === false) {
+            return $this->respondWithCheckResult($this->view->message("fail", "error_load", $basename));
+        }
+        libxml_use_internal_errors(true);
+        $doc = new DOMDocument("1.0", "UTF-8");
+        if (!$doc->loadXML($contents)) {
+            $errors = libxml_get_errors();
+            libxml_use_internal_errors(false);
+            return $this->respondWithCheckResult($this->view->message("fail", "error_well-formed", $basename), $errors);
+        }
+        if (!$doc->relaxNGValidate(__DIR__ . "/../chart.rng")) {
+            $errors = libxml_get_errors();
+            libxml_use_internal_errors(false);
+            return $this->respondWithCheckResult($this->view->message("fail", "error_invalid", $basename), $errors);
+        }
+        libxml_use_internal_errors(false);
+        return $this->respondWithCheckResult($this->view->message("success", "message_valid", $basename));
+    }
+
+    /** @param list<LibXMLError> $errors */
+    private function respondWithCheckResult(string $message, array $errors = []): Response
+    {
+        return Response::create($this->view->render("check", [
+            "message" => $message,
+            "errors" => $errors,
+        ]))->withTitle("Chart – " . $this->view->text("label_check"));
     }
 
     private function new(Request $request): Response

@@ -103,6 +103,13 @@ article.chart_edit .chart_controls {
     justify-content: right;
 }
 
+/* check chart */
+
+article.chart_check {}
+article.chart_check li {
+    list-style: none;
+}
+
 /* export chart */
 
 article.chart_export {}

@@ -7,6 +7,7 @@ $plugin_tx['chart']['label_apply_values']="Apply Values";
 $plugin_tx['chart']['label_aspect_ratio']="Aspect Ratio";
 $plugin_tx['chart']['label_caption']="Caption";
 $plugin_tx['chart']['label_charts']="Charts";
+$plugin_tx['chart']['label_check']="Check";
 $plugin_tx['chart']['label_color']="Color";
 $plugin_tx['chart']['label_datasets']="Datasets";
 $plugin_tx['chart']['label_delete_dataset']="Delete Dataset";
@@ -41,12 +42,15 @@ $plugin_tx['chart']['help_values']="(comma separated numbers; decimal separator 
 
 $plugin_tx['chart']['message_confirm_export']="Do you really want to export the configuration of chart “%s” as power chart?";
 $plugin_tx['chart']['message_export_overwrite']="This will overwrite an existing power chart “%s”!";
+$plugin_tx['chart']['message_valid']="The chart “%s” is valid!";
 
 $plugin_tx['chart']['error_not_authorized']="You are not authorized to conduct this action!";
 $plugin_tx['chart']['error_no_chart']="You did not select a chart!";
 $plugin_tx['chart']['error_create']="Cannot create the chart “%s”!";
 $plugin_tx['chart']['error_load']="Cannot load the chart “%s”!";
 $plugin_tx['chart']['error_save']="Cannot save the chart “%s”!";
+$plugin_tx['chart']['error_well-formed']="The chart “%s” is not well-formed!";
+$plugin_tx['chart']['error_invalid']="The chart “%s” is invalid!";
 
 $plugin_tx['chart']['syscheck_title']="System Check";
 $plugin_tx['chart']['syscheck_extension']="PHP extension %s available: %s";

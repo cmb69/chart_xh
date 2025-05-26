@@ -52,6 +52,54 @@ class ChartAdminCommandTest extends TestCase
         Approvals::verifyHtml($response->output());
     }
 
+    public function testReportsValidDocument(): void
+    {
+        $request = new FakeRequest([
+            "url" => "http://example.com/?&chart&admin=plugin_main&action=check&chart_name=test",
+        ]);
+        $response = $this->sut()($request);
+        $this->assertSame("Chart – Check", $response->title());
+        Approvals::verifyHtml($response->output());
+    }
+
+    public function testsReportsThatNoChartIsSelectedForChecking(): void
+    {
+        $request = new FakeRequest([
+            "url" => "http://example.com/?&chart&admin=plugin_main&action=check",
+        ]);
+        $response = $this->sut()($request);
+        $this->assertStringContainsString("You did not select a chart!", $response->output());
+    }
+
+    public function testReportsFailureToLoadChartForChecking(): void
+    {
+        $request = new FakeRequest([
+            "url" => "http://example.com/?&chart&admin=plugin_main&action=check&chart_name=does-not-exist",
+        ]);
+        $response = $this->sut()($request);
+        $this->assertStringContainsString("Cannot load the chart “does-not-exist”!", $response->output());
+    }
+
+    public function testCheckReportsNonWellFormedChart(): void
+    {
+        file_put_contents(vfsStream::url("root/bad.xml"), '<?xml version="1.0" encoding="UTF-8"?>');
+        $request = new FakeRequest([
+            "url" => "http://example.com/?&chart&admin=plugin_main&action=check&chart_name=bad",
+        ]);
+        $response = $this->sut()($request);
+        $this->assertStringContainsString("The chart “bad” is not well-formed!", $response->output());
+    }
+
+    public function testCheckReportsInvalidChart(): void
+    {
+        file_put_contents(vfsStream::url("root/bad.xml"), '<?xml version="1.0" encoding="UTF-8"?><chart/>');
+        $request = new FakeRequest([
+            "url" => "http://example.com/?&chart&admin=plugin_main&action=check&chart_name=bad",
+        ]);
+        $response = $this->sut()($request);
+        $this->assertStringContainsString("The chart “bad” is invalid!", $response->output());
+    }
+
     public function testRendersEditorForNewChart(): void
     {
         $request = new FakeRequest(["url" => "http://example.com/?&chart&admin=plugin_main&action=create"]);

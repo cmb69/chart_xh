@@ -40,6 +40,7 @@
 <li><a href="#verwendung">Verwendung</a>
 <ul>
 <li><a href="#power-charts">Power-Charts</a></li>
+<li><a href="#manuelle-bearbeitung-der-diagrammdateien">Manuelle Bearbeitung der Diagrammdateien</a></li>
 </ul></li>
 <li><a href="#fehlerbehebung">Fehlerbehebung</a></li>
 <li><a href="#lizenz">Lizenz</a></li>
@@ -84,6 +85,8 @@
 <pre><code>&lt;?=chart_power(&#39;name&#39;, &#39;caption&#39;)?&gt;</code></pre>
 <p>Da JSON nicht die vollständige JavaScript-Syntax unterstützt, ist es nicht möglich Funktionen zu definieren, die als Ereignisbehandler oder anderweitig verwendet werden, aber die Masse der Chart.js Konfiguration kann in JSON ausgedrückt werden.</p>
 <p>Es ist zu beachten, dass normale Diagramme in der Pluginverwaltung als JSON exportiert werden können, so dass es möglich ist Diagramme wie üblich zu definieren, zu exportieren, und dann einfach ein paar Optionen hinzuzufügen, oder die Diagramme anderweitig zu justieren.</p>
+<h3 id="manuelle-bearbeitung-der-diagrammdateien">Manuelle Bearbeitung der Diagrammdateien</h3>
+<p>Werden Diagrammdateien manuell bearbeitet, wird empfohlen einen Editor mit Unterstützung von RelaxNG-Schemata zu verwenden, und gegen <code>chart.rng</code> im Wurzelordner des Plugins zu validieren. Wird das nicht getan, kann es passieren, dass die Diagramme nicht geladen werden können. In diesem Fall kann der <code>Prüfen</code> Schalter in der Pluginverwaltung genutzt werden, um herauszufinden, wo der Fehler liegt.</p>
 <h2 id="fehlerbehebung">Fehlerbehebung</h2>
 <p>Melden Sie Programmfehler und stellen Sie Supportanfragen entweder auf <a href="https://github.com/cmb69/chart_xh/issues">Github</a> oder im <a href="https://cmsimpleforum.com/">CMSimple_XH Forum</a>.</p>
 <h2 id="lizenz">Lizenz</h2>

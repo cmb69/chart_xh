@@ -7,6 +7,7 @@ $plugin_tx['chart']['label_apply_values']="Werte übernehmen";
 $plugin_tx['chart']['label_aspect_ratio']="Seitenverhältnis";
 $plugin_tx['chart']['label_caption']="Überschrift";
 $plugin_tx['chart']['label_charts']="Diagramme";
+$plugin_tx['chart']['label_check']="Prüfen";
 $plugin_tx['chart']['label_color']="Farbe";
 $plugin_tx['chart']['label_datasets']="Datensätze";
 $plugin_tx['chart']['label_delete_dataset']="Datensatz löschen";
@@ -41,12 +42,15 @@ $plugin_tx['chart']['help_values']="(durch Komma getrennte Zahlen; Dezimaltrenne
 
 $plugin_tx['chart']['message_confirm_export']="Wollen Sie wirklich die Konfiguration des Diagramms „%s“ als Power-Chart exportieren?";
 $plugin_tx['chart']['message_export_overwrite']="Dies wird einen bestehenden Power-Chart „%s“ überschreiben!";
+$plugin_tx['chart']['message_valid']="Das Diagramm „%s“ ist gültig!";
 
 $plugin_tx['chart']['error_not_authorized']="Sie sind nicht befugt diese Aktion auszuführen!";
 $plugin_tx['chart']['error_no_chart']="Sie haben keine Chart ausgewählt!";
 $plugin_tx['chart']['error_create']="Das Diagramm „%s“ kann nicht erstellt werden!";
 $plugin_tx['chart']['error_load']="Das Diagramm „%s“ kann nicht geladen werden!";
 $plugin_tx['chart']['error_save']="Das Diagramm „%s“ kann nicht gespeichert werden!";
+$plugin_tx['chart']['error_well-formed']="Das Diagramm „%s“ ist nicht wohlgeformt!";
+$plugin_tx['chart']['error_invalid']="Das Diagramm „%s“ ist ungültig!";
 
 $plugin_tx['chart']['syscheck_title']="System-Prüfung";
 $plugin_tx['chart']['syscheck_extension']="PHP Erweiterung %s verfügbar: %s";

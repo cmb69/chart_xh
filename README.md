@@ -12,6 +12,7 @@ The charts are displayed using [Chart.js](https://www.chartjs.org/).
 - [Settings](#settings)
 - [Usage](#usage)
   - [Power Charts](#power-charts)
+  - [Manual Editing of Chart Files](#manual-editing-of-chart-files)
 - [Troubleshooting](#troubleshooting)
 - [License](#license)
 - [Credits](#credits)
@@ -143,6 +144,14 @@ can be expressed in JSON.
 Note that you can export regular charts in the plugin adminstration to JSON, so
 you can define charts as usual, export them, and then just add a couple of
 options, or tweak them otherwise.
+
+### Manual Editing of Chart Files
+
+If you edit chart files manually, it is recommended to use an editor with support
+for RelaxNG schema, and to validate against `chart.rng` in the root folder of
+the plugin.  Failure to do so might cause load errors of the charts.  If that
+happens, you can use the `Check` button in the plugin administration, to find out
+what is wrong with the chart.
 
 ## Troubleshooting
 

@@ -13,6 +13,7 @@ dargestellt.
 - [Einstellungen](#einstellungen)
 - [Verwendung](#verwendung)
   - [Power-Charts](#power-charts)
+  - [Manuelle Bearbeitung der Diagrammdateien](#manuelle-bearbeitung-der-diagrammdateien)
 - [Fehlerbehebung](#fehlerbehebung)
 - [Lizenz](#lizenz)
 - [Danksagung](#danksagung)
@@ -152,6 +153,14 @@ Es ist zu beachten, dass normale Diagramme in der Pluginverwaltung als JSON
 exportiert werden können, so dass es möglich ist Diagramme wie üblich zu definieren,
 zu exportieren, und dann einfach ein paar Optionen hinzuzufügen, oder die
 Diagramme anderweitig zu justieren.
+
+### Manuelle Bearbeitung der Diagrammdateien
+
+Werden Diagrammdateien manuell bearbeitet, wird empfohlen einen Editor mit
+Unterstützung von RelaxNG-Schemata zu verwenden, und gegen `chart.rng` im Wurzelordner
+des Plugins zu validieren. Wird das nicht getan, kann es passieren, dass die
+Diagramme nicht geladen werden können. In diesem Fall kann der `Prüfen` Schalter
+in der Pluginverwaltung genutzt werden, um herauszufinden, wo der Fehler liegt.
 
 ## Fehlerbehebung
 

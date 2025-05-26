@@ -40,6 +40,7 @@
 <li><a href="#usage">Usage</a>
 <ul>
 <li><a href="#power-charts">Power Charts</a></li>
+<li><a href="#manual-editing-of-chart-files">Manual Editing of Chart Files</a></li>
 </ul></li>
 <li><a href="#troubleshooting">Troubleshooting</a></li>
 <li><a href="#license">License</a></li>
@@ -84,6 +85,8 @@
 <pre><code>&lt;?=chart_power(&#39;name&#39;, &#39;caption&#39;)?&gt;</code></pre>
 <p>Since JSON does not support full JavaScript syntax, you cannot define any functions to be used as event listeners or otherwise, but most of the Chart.js configuration can be expressed in JSON.</p>
 <p>Note that you can export regular charts in the plugin adminstration to JSON, so you can define charts as usual, export them, and then just add a couple of options, or tweak them otherwise.</p>
+<h3 id="manual-editing-of-chart-files">Manual Editing of Chart Files</h3>
+<p>If you edit chart files manually, it is recommended to use an editor with support for RelaxNG schema, and to validate against <code>chart.rng</code> in the root folder of the plugin. Failure to do so might cause load errors of the charts. If that happens, you can use the <code>Check</code> button in the plugin administration, to find out what is wrong with the chart.</p>
 <h2 id="troubleshooting">Troubleshooting</h2>
 <p>Report bugs and ask for support either on <a href="https://github.com/cmb69/chart_xh/issues">Github</a> or in the <a href="https://cmsimpleforum.com/">CMSimple_XH Forum</a>.</p>
 <h2 id="license">License</h2>
