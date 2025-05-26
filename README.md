@@ -1,11 +1,17 @@
 # Chart_XH
 
+Chart_XH facilitates embedding charts on a CMSimple_XH website.
+Basic charts can be created and maintained in the plugin administration.
+For more advanced needs, there is the possibility to use so-called “Power Charts”.
+The charts are displayed using [Chart.js](https://www.chartjs.org/).
+
 - [Requirements](#requirements)
 - [Download](#download)
 - [Installation](#installation)
 - [Quick Start](#quick-start)
 - [Settings](#settings)
 - [Usage](#usage)
+  - [Power Charts](#power-charts)
 - [Troubleshooting](#troubleshooting)
 - [License](#license)
 - [Credits](#credits)
@@ -98,13 +104,45 @@ The look of Chart_XH can be customized under `Stylesheet`.
 
 ## Usage
 
-To display a chart on a page:
+To embed a chart on a page:
 
-    {{{chart}}}
+    {{{chart('name')}}}
 
-To display a chart in the template:
+To embed a chart in the template:
 
-    <?=chart()?>
+    <?=chart('name')?>
+
+Where `name` is the name of a chart you have previously defined in the plugin
+administration (the [Quick Start section](#quick-start) describes how that is
+done).
+
+### Power Charts
+
+While regular charts should cover the most basic needs, power charts unleash (almost)
+the full power of Chart.js.  To use these, you need a solid understanding of JSON,
+and have to dive into the [Chart.js documentation](https://www.chartjs.org/docs/latest/).
+
+While there is some support for creating and maintaining power charts in the
+plugin administration (including syntax highlighting, if
+[Codeeditor_XH ≥ 2.3](https://github.com/cmb69/codeeditor_xh/releases) is installed),
+you likely want to do this on a local machine with a good JSON editor at hand.
+
+The gist of it is that you write a JSON file instead of the usual JavaScript
+configuration of Chart.js, and then embed the chart on a page:
+
+    {{{chart_power('name', 'caption')}}}
+
+Or in the template:
+
+    <?=chart_power('name', 'caption')?>
+
+Since JSON does not support full JavaScript syntax, you cannot define any functions
+to be used as event listeners or otherwise, but most of the Chart.js configuration
+can be expressed in JSON.
+
+Note that you can export regular charts in the plugin adminstration to JSON, so
+you can define charts as usual, export them, and then just add a couple of
+options, or tweak them otherwise.
 
 ## Troubleshooting
 

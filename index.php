@@ -27,7 +27,7 @@ function chart(string $name): string
     return Dic::chartCommand()($name, null, Request::current())();
 }
 
-function chart_advanced(string $name, string $caption): string
+function chart_power(string $name, string $caption): string
 {
     return Dic::chartCommand()($name, $caption, Request::current())();
 }

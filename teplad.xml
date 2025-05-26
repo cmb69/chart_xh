@@ -81,9 +81,18 @@
   <descriptions>
     <!-- description of the plugin, ca. 200 characters, you can use <br/>, <ol></ol>, <ul></ul>, <li></li>, <b></b>, <i></i>. -->
     <description lang="en">
+      Chart_XH facilitates embedding charts on a CMSimple_XH website.
+      Basic charts can be created and maintained in the plugin administration.
+      For more advanced needs, there is the possibility to use so-called “Power Charts”.
+      The charts are displayed using Chart.js (https://www.chartjs.org/).
     </description>
     <!-- Beschreibung des Plugins, ca. 200 Zeichen, es können <br/>, <ol></ol>, <ul></ul>, <li></li>, <b></b>, <i></i> genutzt werden. -->
     <description lang="de">
+      Chart_XH ermöglicht das Einbetten von Diagrammen auf einer CMSimple_XH Website.
+      Einfache Diagramme können in der Pluginverwaltung erstellt und gewartet werden.
+      Für fortgeschritte Bedürfnisse gibt es die Möglichkeit sogenannte „Power-Charts“
+      zu verwenden. Die Diagramme werden mit Chart.js (https://www.chartjs.org/)
+      dargestellt.
     </description>
     <!-- additional languages are possible, i.e. da, fr, pl, ... -->
     <!-- The use of this language is limited by the website where the repository is hosted. -->

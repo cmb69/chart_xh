@@ -1,11 +1,18 @@
 # Chart_XH
 
+Chart_XH ermöglicht das Einbetten von Diagrammen auf einer CMSimple_XH Website.
+Einfache Diagramme können in der Pluginverwaltung erstellt und gewartet werden.
+Für fortgeschritte Bedürfnisse gibt es die Möglichkeit sogenannte „Power-Charts“
+zu verwenden. Die Diagramme werden mit [Chart.js](https://www.chartjs.org/)
+dargestellt.
+
 - [Voraussetzungen](#voraussetzungen)
 - [Download](#download)
 - [Installation](#installation)
 - [Schnellstart](#schnellstart)
 - [Einstellungen](#einstellungen)
 - [Verwendung](#verwendung)
+  - [Power-Charts](#power-charts)
 - [Fehlerbehebung](#fehlerbehebung)
 - [Lizenz](#lizenz)
 - [Danksagung](#danksagung)
@@ -102,13 +109,49 @@ Das Aussehen von Chart_XH kann unter `Stylesheet` angepasst werden.
 
 ## Verwendung
 
-Um ein Diagramm auf einer Seite anzuzeigen:
+Um ein Diagramm auf einer Seite einzubetten:
 
-    {{{chart}}}
+    {{{chart('name')}}}
 
-Um ein Diagramm im Template anzuzeigen:
+Um ein Diagramm im Template einzubetten:
 
-    <?=chart()?>
+    <?=chart('name')?>
+
+Dabei ist `name` der Name eines Diagramms, das zuvor in der Plugin-Verwaltung
+angelegt wurde (der [Schnellstart Abschnitt](#schnellstart) erklärt wie das
+gemacht wird).
+
+### Power-Charts
+
+Während normale Diagramme die wichtigste Funktionalität abdecken sollten, können
+Power-Charts (fast) alle Möglichkeiten von Chart.js nutzen. Um diese zu verwenden,
+benötigt man ein Grundverständnis von JSON, und muss die
+ [Chart.js Dokumentation](https://www.chartjs.org/docs/latest/) lesen.
+
+In der Pluginverwaltung wird das Erstellen und Warten von Power-Charts
+grundlegend untersützt (einschließlich Syntax-Highlighting, wenn
+[Codeeditor_XH ≥ 2.3](https://github.com/cmb69/codeeditor_xh/releases) installiert
+ist), aber vermutlich ist es das Beste, wenn solche Diagramme auf einem lokalen
+Rechner mit einem guten JSON Editor erstellt werden.
+
+Im Wesentlichen geht es darum, dass eine JSON-Datei statt der üblichen JavaScript-
+Konfiguration von Chart.js erstellt wird, und dann das Diagramm auf einer Seite
+eingebettet wird:
+
+    {{{chart_power('name', 'caption')}}}
+
+Oder im Template:
+
+    <?=chart_power('name', 'caption')?>
+
+Da JSON nicht die vollständige JavaScript-Syntax unterstützt, ist es nicht möglich
+Funktionen zu definieren, die als Ereignisbehandler oder anderweitig verwendet werden,
+aber die Masse der Chart.js Konfiguration kann in JSON ausgedrückt werden.
+
+Es ist zu beachten, dass normale Diagramme in der Pluginverwaltung als JSON
+exportiert werden können, so dass es möglich ist Diagramme wie üblich zu definieren,
+zu exportieren, und dann einfach ein paar Optionen hinzuzufügen, oder die
+Diagramme anderweitig zu justieren.
 
 ## Fehlerbehebung
 
