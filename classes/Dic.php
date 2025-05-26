@@ -28,7 +28,7 @@ use Plib\View;
 
 class Dic
 {
-    public const VERSION = "1.0-dev";
+    public const VERSION = "1.0";
 
     public static function chartCommand(): ChartCommand
     {

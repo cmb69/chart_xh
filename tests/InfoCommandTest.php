@@ -31,7 +31,7 @@ class InfoCommandTest extends TestCase
     public function testRendersPluginInfo(): void
     {
         $response = $this->sut()();
-        $this->assertSame("Chart 1.0-dev", $response->title());
+        $this->assertSame("Chart 1.0", $response->title());
         Approvals::verifyHtml($response->output());
     }
 }
